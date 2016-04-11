@@ -1,0 +1,37 @@
+
+ <!--  ////////// select panel gallery ///////////  -->
+
+
+
+
+<div class="input-btn-group" uib-dropdown is-open="status.isopen">
+      <button id="single-button" type="button" class="btn btn-primary" uib-dropdown-toggle ng-disabled="disabled">
+       <span> choose category  </span> <span class="caret"></span>
+      </button>
+      <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="single-button">
+        <li class="btn-category" ng-repeat="category in vm.categories" role="menuitem"><a>{{category}}</a></li>
+      </ul>
+</div>
+
+
+
+<br/>
+<br/>
+<br/>
+
+  <!--  ////////// Items gallery ///////////  -->
+
+  <div class="row">
+    <div class="col-sm-6 col-md-4" ng-repeat="item in vm.allItems">
+      <div class="thumbnail">
+        <img class="pull-right" style="width:100%;height:100%;overflow: hidden;" ng-src="{{ item.url }}" alt="{{ item.name }}">
+        <div class="caption">
+          <h3>{{ }}</h3>
+          <br/>
+          <br/>
+          <p>{{ }}</p>
+          <p><a ng-href="{{awesomeThing.url}}">{{ awesomeThing.url }}</a></p>
+        </div>
+      </div>
+    </div>
+  </div>

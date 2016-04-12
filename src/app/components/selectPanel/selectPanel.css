@@ -1,0 +1,8 @@
+.my-btn {
+	background-color: #5CA8FF;
+	border-color: #5CA8FF;
+	height:40px;
+}
+.my-btn:hover {
+	background-color: #137BF2;
+}

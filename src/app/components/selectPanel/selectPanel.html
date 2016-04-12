@@ -3,26 +3,69 @@
 
 
 
+      <div id="dropdown-long-content">
 
-<div class="input-btn-group" uib-dropdown is-open="status.isopen">
-      <button id="single-button" type="button" class="btn btn-primary" uib-dropdown-toggle ng-disabled="disabled">
-       <span> choose category  </span> <span class="caret"></span>
-      </button>
-      <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="single-button">
-        <li class="btn-category" ng-repeat="category in vm.categories" role="menuitem"><a>{{category}}</a></li>
-      </ul>
-</div>
+      <!--  //////////  categories  /////////// -->
+
+        <div id="1111">
+          <div class="btn-group" uib-dropdown keyboard-nav dropdown-append-to="appendToEl">
+            <button id="btn-append-to" type="button" class="btn btn-primary my-btn" uib-dropdown-toggle>
+              <b>{{ vm.chooseCategory}} &nbsp&nbsp</b><span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu " uib-dropdown-menu role="menu" aria-labelledby="btn-append-to">
+              <li ng-repeat="category in vm.categories" ng-click="vm.setCategory(category)" role="menuitem"><a>{{category}}</a></li>
+              <li ng-hide="vm.chooseCategory == 'choose category' " ng-click="vm.setCategory()" role="menuitem"><a><b>all categories</b></a></li>
+            </ul>
+          </div>
 
 
+          <div class="btn-group" uib-dropdown dropdown-append-to-body>
+            <button id="2222" type="button" class="btn btn-primary my-btn" uib-dropdown-toggle>
+              <b>{{vm.priceMin}} pln &nbsp&nbsp </b><span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="btn-append-to-to-body">
+              <li ng-click="vm.updatePriceMin(range)" ng-repeat="range in vm.priceRangesMin" role="menuitem"><a>{{range}}  pln</a></li>
+            </ul>
+          </div>
 
-<br/>
-<br/>
-<br/>
 
-  <!--  ////////// Items gallery ///////////  -->
+          <div class="btn-group" uib-dropdown>
+            <button id="3333" type="button" class="btn btn-primary my-btn" uib-dropdown-toggle>
+              <b>{{vm.priceMax}} pln &nbsp&nbsp </b> <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="btn-append-to-single-button">
+              <li ng-click="vm.updatePriceMax(range)" ng-repeat="range in vm.priceRangesMax" role="menuitem"><a>{{range}}  pln</a></li>
+            </ul>
+          </div>
+
+
+          <div class="btn-group" uib-dropdown>
+            <button id="4444" type="button" class="btn btn-primary my-btn" uib-dropdown-toggle>
+              Inline Dropdown <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="btn-append-to-single-button">
+              <li role="menuitem"><a href="#">Action</a></li>
+            </ul>
+          </div>
+
+          <div class="btn-group">
+            <label class="btn btn-primary my-btn" ng-model="radioModel" uib-btn-radio="'Left'">Left</label>
+            <label class="btn btn-primary my-btn" ng-model="radioModel" uib-btn-radio="'Middle'">Middle</label>
+            <label class="btn btn-primary my-btn" ng-model="radioModel" uib-btn-radio="'Right'">Right</label>
+          </div>
+              </div>
+            </div>
+          </div>
+
+          <br/>
+          <br/>
+      
+
+
+  <!--  ////////// Items gallery ///////////  --> 
 
   <div class="row">
-    <div class="col-sm-6 col-md-4" ng-repeat="item in vm.allItems">
+    <div class="col-sm-6 col-md-4" ng-repeat="item in vm.allItems | filter : vm.filterCategory | priceFilter :vm.priceMin :vm.priceMax">
       <div class="thumbnail">
         <img class="pull-right" style="width:100%;height:100%;overflow: hidden;" ng-src="{{ item.url }}" alt="{{ item.name }}">
         <div class="caption">

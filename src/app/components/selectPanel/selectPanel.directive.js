@@ -34,11 +34,11 @@
       { id: 4,  category: "warzywa",   name: "marchew",  price : 3.5, count: 8, url: "http://naturalneoczyszczanie.pl/wp-content/uploads/2011/06/marchewka.jpg"},
       { id: 5,  category: "słodycze",  name: "wafelki",  price : 2.8, count: 4, url: "http://swpanel.pl/userfiles/user_65525/images/427_Neap%202004%20solo.jpg"},
       { id: 6,  category: "owoce",     name: "truskawki",price : 8,   count: 3, url: "https://bialczynski.files.wordpress.com/2013/06/aa-12529377small_strawberry__95536.jpg"},
-      { id: 7,  category: "sport",     name: "lotki",    price : 150, count: 4, url: "http://automaty.romul.pl/images/dart_point.jpg"},
+      { id: 7,  category: "sport",     name: "lotki",    price : 150, count: 4, url: "http://www.carpediem.pl/upl/departments/news/f883adab2d97b8d6bafcd8e45dce0308.jpg"},
       { id: 8,  category: "napoje",    name: "whisky",   price : 80,  count: 4, url: "http://uncrate.com/p/2015/07/barrel-proof-jd.jpg"},
       { id: 9,  category: "owoce",     name: "gruszka",  price : 4.90,count: 9, url: "http://cdn12.glamka.smcloud.net/s/photos/t/411/cwiczenia_dla_figury_typu_gruszka_12027.jpg"},
       { id: 10, category: "rtv",       name: "pendrive", price : 60,  count: 7, url: "http://ecsmedia.pl/c/pendrive-adata-uv150-16gb-czerwony-b-iext24168174.jpg"},
-      { id: 11, category: "warzywa",   name: "ziemniak", price : 2.5, count: 4, url: "http://www.odzywianie.info.pl/img/stories/arts/_665x/ziemniaki-kalorie-wartosci-odzywcze-i-ciekawostki.jpg"},
+      { id: 11, category: "warzywa",   name: "ziemniak", price : 2.5, count: 4, url: "http://www.niam.pl/rimages/crop/600/450/files/images/PRODUCT/BACKUP/31334212547_njnmftduspherdspibtc.jpg"},
       { id: 12, category: "słodycze",  name: "czekolada",price : 3.5, count: 8, url: "http://www.facetikuchnia.com.pl/wp-content/uploads/2014/11/Dobre-czekolady_03-610x300.jpg"},
       { id: 13, category: "napoje",    name: "kubuś",    price : 2.4, count: 2, url: "http://a.pl/zdjecie-569728/kubus-sok-marchew-jablko-malina-300ml-Full"},
       { id: 14, category: "kosmetyki", name: "szampon",  price : 4.4, count: 3, url: "http://selgros24.pl/images/prodImages/Bambi_SZAMPON_DLA_DZIECI_BAMBI_150ML_72634520_0_1000_1000.jpg"},
@@ -70,13 +70,13 @@
       { id: 41, category: "agd",       name: "czajnik",  price : 200, count: 2, url: "http://img.shmbk.pl/rimgspr/22218743_max_300_400_dla-domu-do-kuchni-i-jadalni-do-gotowania-czajniki-florina-koper-czajnik-2-2-l.jpg"},
       { id: 42, category: "sport",     name: "łyżwy",    price : 1500,count: 3, url: "http://aba-sport.pl/pol_pl_Lyzwy-figurowe-Classic-Spokey-3541_3.jpg"},
       { id: 43, category: "sport",     name: "latawiec", price : 800, count: 5, url: "http://www.rai-bud.pl/1zdj/latawce/Latawiec_akrobacyjny_cyclone_150gx_1034_1_zw700"},
-      { id: 44, category: "napoje",    name: "oranżada", price : 2.5, count: 1, url: "http://enpide.com/wp-content/uploads/2015/12/coca-cola-kutu-330-mlcanyeni.jpg"},
+      { id: 44, category: "napoje",    name: "oranżada", price : 2.5, count: 1, url: "http://www.kliknijwzdrowie.pl/wp-content/uploads/2015/05/Hellena_szklana_butelka-e1432552844387-1024x332.png"},
       { id: 45, category: "rtv",       name: "gramofon", price : 2000,count: 2, url: "http://thumbs.dreamstime.com/z/klasyczny-gramofon-43882761.jpg"},
       { id: 46, category: "sport",     name: "bilard",   price : 9000,count: 7, url: "http://sklep.smjsport.pl/pol_pl_Mini-bilard-Solex-sports-91311-1178_3.jpg"},
       { id: 47, category: "sport",     name: "kij",      price : 700, count: 7, url: "http://resources1.news.com.au/images/2011/04/08/1226036/171989-baseball-bat.jpg"},
       { id: 48, category: "sport",     name: "koszulka", price : 200, count: 9, url: "http://tomasport.pl/images/Koszulka-Nike-Fc-Barcelona-532811-411-4.jpg"},
       { id: 49, category: "kosmetyki", name: "perfumy",  price : 450, count: 7, url: "http://polki.pl/work/privateimages/formats/E/24847.jpg"},
-      { id: 50, category: "sport",     name:"paralotnia",price : 800, count: 7, url: "http://uncrate.com/p/2015/07/barrel-proof-jd.jpg"},
+      { id: 50, category: "sport",     name:"paralotnia",price : 800, count: 7, url: "http://www.komel.katowice.pl/images/paralotniawlocie.jpg"},
       { id: 51, category: "rtv",       name: "iPhone",   price : 3000,count: 8, url: "http://applemobile.pl/wp-content/uploads/2015/11/Ikona4.jpg"},
       { id: 52, category: "rtv",       name: "tablet",   price : 2000,count: 2, url: "http://serwis-laptopy.pl/images/ilustracje/razer-edge-5-100020387-orig.png"} ];
 
@@ -92,6 +92,22 @@
       vm.priceMax = 10000;
       vm.updatePriceMin = updatePriceMin;
       vm.updatePriceMax = updatePriceMax;
+
+      vm.itemsOnPage = [10, 20, 30, 'all'];
+      vm.itemsOnPageSelected = 10;
+      vm.updateItemsOnPageAmount = updateItemsOnPageAmount;
+
+      vm.availablePages;
+      vm.pagesAmount;
+      vm.updatePagesAmount = vm.updatePagesAmount;
+      vm.currentPage = 1;
+      vm.updatePage = updatePage;
+      vm.changePagePreview = changePagePreview;
+      vm.changePageNext = changePageNext;
+
+      vm.changePictureSize = changePictureSize;
+      vm.pictureSize;
+
       
    
       updateCategoryList();
@@ -132,32 +148,36 @@
       } 
 
 
-
-
-
-      // function updatePriceFilter (value, up) {
-
-        
-      //   var items = [];
-      //   var l = vm.allItems.length;
-
-      //   if (!up) {
-      //     vm.filterPriceRangeDown = value;
-      //   }  else {
-      //     vm.filterPriceRangeUp = value;
-      //   }  
-
-      //   vm.allItems.forEach(function (item) {
-      //     if (item.price > vm.filterPriceRangeDown && item.price < vm.filterPriceRangeUp) {
-      //       items.push(item);
-      //     }
-      //   });
-      //   console.log(items);
-        
-      //   }
-
-        
+      function updateItemsOnPageAmount (value) {
+        vm.itemsOnPageSelected = value;
+        vm.currentPage = 1;
       }
+
+
+      function updatePage (value) {
+        vm.currentPage = value;
+      }
+
+      function changePagePreview () {
+        if (vm.currentPage > 1) {
+          vm.currentPage --;
+        }
+      }
+
+      function changePageNext () {
+          vm.currentPage ++;
+      }
+
+      function changePictureSize (size) {
+        vm.pictureSize = size;
+      } 
+      
+
+        
+    }
+
+
+      
  }
 
 

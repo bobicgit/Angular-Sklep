@@ -6,3 +6,17 @@
 .my-btn:hover {
 	background-color: #137BF2;
 }
+
+
+.smallPicture {
+	width: 25%;
+} 
+
+.mediumPicture {
+	width: 33%;
+} 
+
+.largePicture {
+	width: 50%;
+} 
+

@@ -19,6 +19,9 @@
           </div>
 
 
+      <!--  //////////  price min  /////////// -->
+        
+
           <div class="btn-group" uib-dropdown dropdown-append-to-body>
             <button id="2222" type="button" class="btn btn-primary my-btn" uib-dropdown-toggle>
               <b>{{vm.priceMin}} pln &nbsp&nbsp </b><span class="caret"></span>
@@ -27,6 +30,8 @@
               <li ng-click="vm.updatePriceMin(range)" ng-repeat="range in vm.priceRangesMin" role="menuitem"><a>{{range}}  pln</a></li>
             </ul>
           </div>
+
+      <!--  //////////  price max  /////////// -->
 
 
           <div class="btn-group" uib-dropdown>
@@ -38,21 +43,47 @@
             </ul>
           </div>
 
+      <!--  //////////  items on page  /////////// -->
+    
 
           <div class="btn-group" uib-dropdown>
             <button id="4444" type="button" class="btn btn-primary my-btn" uib-dropdown-toggle>
-              Inline Dropdown <span class="caret"></span>
+              <b>{{vm.itemsOnPageSelected}} items &nbsp</b> <span class="caret"></span>
             </button>
             <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="btn-append-to-single-button">
-              <li role="menuitem"><a href="#">Action</a></li>
+              <li ng-click="vm.updateItemsOnPageAmount(amount)" ng-repeat="amount in vm.itemsOnPage"role="menuitem"><a>{{amount}} items</a></li>
             </ul>
           </div>
 
+
+      <!--  //////////  pagination  /////////// -->
+
+
           <div class="btn-group">
-            <label class="btn btn-primary my-btn" ng-model="radioModel" uib-btn-radio="'Left'">Left</label>
-            <label class="btn btn-primary my-btn" ng-model="radioModel" uib-btn-radio="'Middle'">Middle</label>
-            <label class="btn btn-primary my-btn" ng-model="radioModel" uib-btn-radio="'Right'">Right</label>
+            <label class="btn btn-primary my-btn" ng-model="radioModel" ng-click="vm.changePagePreview()" uib-btn-radio="'Left'"><b><</b></label>
+            <div class="btn-group" uib-dropdown>
+              <button id="5555" type="button" class="btn btn-primary my-btn" uib-dropdown-toggle>
+                 <span class="caret"></span>&nbsp<b> page {{vm.currentPage}}</b>
+              </button>
+              <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="btn-append-to-single-button">
+                <li ng-click="vm.updatePage(page)" ng-repeat="page in vm.availablePages | pagesAmountFilter :vm.allItems :vm.itemsOnPageSelected" role="menuitem" getPagesAmount="mv.currentPage === page" ><a>page {{page}}</a></li>
+              </ul>
+            </div>
+            <label class="btn btn-primary my-btn" ng-model="radioModel" ng-disabled="vm.currentPage ===3" ng-click="vm.changePageNext()" uib-btn-radio="'Right'"><b> &nbsp></b</label>
           </div>
+
+      <!--  //////////  picture size  /////////// -->
+
+          <div class="btn-group">
+            <label class="btn btn-primary my-btn" ng-click="vm.changePictureSize('small')" ng-model="radioModel1" uib-btn-radio="'Left'"><b>S</b></label>
+            <label class="btn btn-primary my-btn" ng-click="vm.changePictureSize('medium')" ng-model="radioModel1" uib-btn-radio="'Middle'"><b>M</b></label>
+            <label class="btn btn-primary my-btn" ng-click="vm.changePictureSize('large')" ng-model="radioModel1" uib-btn-radio="'Right'"><b>L</b</label>
+          </div>
+
+           <div class="btn-group my-btn my-input">
+    
+      <input type="text" ng-model="dynamicPopover.content" class="form-control" placeholder="find your item">
+    </div>
               </div>
             </div>
           </div>
@@ -65,7 +96,7 @@
   <!--  ////////// Items gallery ///////////  --> 
 
   <div class="row">
-    <div class="col-sm-6 col-md-4" ng-repeat="item in vm.allItems | filter : vm.filterCategory | priceFilter :vm.priceMin :vm.priceMax">
+    <div class="col-sm-6 col-md-4 " ng-class="{smallPicture: vm.pictureSize === 'small', mediumPicture: vm.pictureSize === 'medium', largePicture: vm.pictureSize === 'large'}" ng-repeat="item in vm.allItems | filter : vm.filterCategory | priceFilter :vm.priceMin :vm.priceMax | paginationFilter: vm.itemsOnPageSelected :vm.currentPage">
       <div class="thumbnail">
         <img class="pull-right" style="width:100%;height:100%;overflow: hidden;" ng-src="{{ item.url }}" alt="{{ item.name }}">
         <div class="caption">

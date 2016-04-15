@@ -13,9 +13,9 @@
         <p class="animated infinite" ng-class="main.classAnimation"></p>
         <div class="item-in-cart" ng-repeat="item in vm.cartItems">
             <div class="cart-image-div"><img src="{{item.url}}"/></div>
-            <div class="cart-amount-div"><span>1</span></div>
-            <div class="cart-sum-div"><span>{{item.price | currency}}</span></div>
-            <div class="cart-remove"><span class="glyphicon glyphicon-remove"></span></div>
+            <div class="cart-amount-div"><span>{{item.amount}} pc.</span><div ng-click="vm.addOneItem(item)" class="add-one-item"><span class="glyphicon glyphicon-triangle-top"></span></div><div ng-click="vm.removeOneItem(item)" class="remove-one-item"><span class="glyphicon glyphicon-triangle-bottom"></span></div></div>
+            <div class="cart-sum-div"><span>{{item.price * item.amount | currency}}</span><span style="font-size: 1.3em;" ng-if="item.amount > 1"  > {{item.price | currency}}/pc</span></div>
+            <div class="cart-remove" ng-click="vm.removeItem(item)"><span class="glyphicon glyphicon-remove"></span></div>
         </div>
         <div class="cart-bar"></div>
         <div class="item-in-cart">

@@ -92,6 +92,10 @@
 	color: red;
 }
 
+.glyphicon-remove:hover {
+	color: #990303;
+}
+
 .cart-image-div2 {
 	position: relative;
 	bottom:-20px;
@@ -99,3 +103,35 @@
 	height:100%;
 	width: 40%;
 }
+
+.per-piece {
+	font-size: 1em;
+}
+
+.add-one-item {
+
+	position: relative;
+	height:30px;
+	width: 30px;
+	top: -65px;
+	left: 90px;
+}
+
+.remove-one-item {
+
+	position: relative;
+	height: 30px;
+	width: 30px;
+	top: -55px;
+	left: 90px;
+}
+
+.glyphicon-triangle-bottom, .glyphicon-triangle-top {
+	display:none;
+} 
+
+.cart-amount-div:hover .glyphicon-triangle-bottom,
+.cart-amount-div:hover .glyphicon-triangle-top  {
+	display:block;
+}
+

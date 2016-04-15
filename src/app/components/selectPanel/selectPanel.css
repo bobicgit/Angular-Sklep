@@ -20,3 +20,57 @@
 	width: 50%;
 } 
 
+.picture-div {
+	width: 100%;
+	height: 200px;
+}
+
+.caption1 {
+	width: 100%;
+	height: 30px;
+	text-align: center;
+}
+
+.thumbnail {
+	height: auto;
+}
+
+.put-to-cart {
+
+	min-width: 250px;
+	display: none;
+	background-color: #5CA8FF;
+	position: absolute;
+	height: 20%;
+	width: 65%;
+	bottom: 25%;
+	right:0px;
+	z-index: 100;
+}
+
+
+.add-to-cart {
+	color: white;
+	position: absolute;
+	font-size: 2em;
+	bottom:5px;
+	right: 20px;
+}
+
+ .glyphicon-shopping-cart{
+
+	
+	opacity: 0.9;
+	font-size: 4em;
+	text-align: center;
+	color: white;
+}
+
+.thumbnail:hover .put-to-cart{
+	display: block;
+}
+
+.go-to-cart span{
+	opacity: 1;
+	font-size: 1.5em;
+}

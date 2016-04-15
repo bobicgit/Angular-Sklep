@@ -12,6 +12,11 @@
         controller: 'MainController',
         controllerAs: 'main'
       })
+      .when('/cart', {
+        templateUrl: 'app/components/shoppingCart/shoppingCart.html',
+        controller: 'ShoppingCartController',
+        controllerAs: 'vm'
+      })
       .otherwise({
         redirectTo: '/'
       });

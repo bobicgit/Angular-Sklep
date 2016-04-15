@@ -1,0 +1,101 @@
+.item-in-cart {
+	width: 100%;
+	height: 100px;
+	border: 1px solid white;
+	margin: 10px;
+	min-width: 400px;
+}
+
+.cart-image-div {
+	position: relative;
+	left: 10%;
+	height:100%;
+	width: 20%;
+	background-color: red;
+	background-color: white;
+}
+
+.cart-image-div img {
+	position: relative;
+	height: 100%;
+	overflow: hidden;
+}
+
+.cart-amount-div {
+	position: relative;
+	width: 10%;
+	left:40%;
+	bottom:70px;
+	height:50%;
+}
+
+.cart-amount-div span, .cart-sum-div span {
+	font-size: 2.5em;
+
+}
+
+.cart-image-div img {
+	min-width: 180px;
+	position: relative;
+	height: 100%;
+	overflow: hidden;
+}
+
+.cart-sum-div{
+	position: relative;
+	width: 10%;
+	left:60%;
+	bottom:120px;
+	height:50%
+}
+
+.cart-bar {
+	position: relative;
+	left: 30%;
+	background-color: black;
+	width: 70%;
+	height: 8px;
+}
+
+.cart-summary-div {
+	position: relative;
+	left: 10%;
+	height:100%;
+	width: 20%;
+	background-color: white;
+}
+
+.sum-up {
+	position: relative;
+	width: 100%;
+	font-size: 3em;
+	text-align: left;
+}
+
+.buy {
+	position: relative;
+	bottom:10px;
+
+}
+
+.cart-remove {
+	
+	font-size: 3em;
+	position: relative;
+	width: 10%;
+	left:80%;
+	bottom:170px;
+	height:50%
+}
+
+.glyphicon-remove {
+	color: red;
+}
+
+.cart-image-div2 {
+	position: relative;
+	bottom:-20px;
+	left: 20%;
+	height:100%;
+	width: 40%;
+}

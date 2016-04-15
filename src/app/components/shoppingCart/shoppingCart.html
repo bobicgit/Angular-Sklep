@@ -1,0 +1,31 @@
+<div class="container">
+
+    <div>
+    <acme-navbar creation-date="main.creationDate"></acme-navbar>
+    </div>
+
+    <div class="jumbotron text-center">
+        <h1>'Koszyk!'</h1>
+        <p class="lead">
+            <img src="assets/images/yeoman.png" alt="I'm Yeoman"><br>
+            Always a pleasure scaffolding your apps.
+        </p>
+        <p class="animated infinite" ng-class="main.classAnimation"></p>
+        <div class="item-in-cart" ng-repeat="item in vm.cartItems">
+            <div class="cart-image-div"><img src="{{item.url}}"/></div>
+            <div class="cart-amount-div"><span>1</span></div>
+            <div class="cart-sum-div"><span>{{item.price | currency}}</span></div>
+            <div class="cart-remove"><span class="glyphicon glyphicon-remove"></span></div>
+        </div>
+        <div class="cart-bar"></div>
+        <div class="item-in-cart">
+            <div class="cart-image-div2"><span class="sum-up">to sum up...</span></div>
+            <div class="cart-amount-div"><span></span></div>
+            <div class="cart-sum-div"><span><b>{{vm.sum | currency}}</b></span></div>
+            <div class="cart-remove"><button class="btn btn-success btn-lg buy"><b>  buy!  </b></button>
+            </div>
+        </div>  
+    </div>
+</div>
+
+    

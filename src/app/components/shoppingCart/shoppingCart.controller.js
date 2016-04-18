@@ -16,7 +16,7 @@ angular
         vm.sum;
         vm.updteCartItems = updateCartItems;
         vm.removeItem = removeItem;
-        vm.addOneItem = addOneItem;
+        vm.add = add;
         vm.removeOneItem = removeOneItem;
         
     
@@ -25,7 +25,9 @@ angular
 
 
         function updateCartItems() {
+            console.log('ssss');
             vm.cartItems = ShoppingCart.readCart();
+            console.log('cartItems' + vm.cartItems);
             ShoppingCart.sum();
             vm.sum = ShoppingCart.readSum();
         }
@@ -35,12 +37,13 @@ angular
             updateCartItems();
         }
 
-        function addOneItem (item) {
-            console.log('dodano jeden' + item);
+        function add (item, amount) {
+            ShoppingCart.add(item, amount);
+            updateCartItems();
         }
 
         function removeOneItem (item) {
-            console.log('usunięto jeden' + item);
+            ShoppingCart.removeOneItem(item);
         }
 
         

@@ -5,8 +5,9 @@ angular
     .module("yoman")
     .factory("ShoppingCart", ShoppingCart);
 
+    ShoppingCart.$inject = ['$q','FirebaseFactory'];
 
-    function ShoppingCart () {
+    function ShoppingCart ($q, FirebaseFactory) {
 
         var cart = [];
         
@@ -18,37 +19,41 @@ angular
             addToCart: addToCart,
             sum: sum,
             readSum : readSum,
-            remove : remove
+            remove : remove,
+            add: add,
+            removeOneItem: removeOneItem
         }
 
         return factory;
         
 
-        function cart () {
-            cart = [];
-        }
 
         function readCart () {
-            return cart;
+            
+            var items;
+            FirebaseFactory.readCart().then(function (items) {
+                console.log(items);
+            });
+
         }
 
         function addToCart (item) {
+
+            FirebaseFactory.addToCart(item);
 
             var added = false;
 
             cart.forEach(function (cartItem) {
                 if (cartItem.id === item.id) {
-                    cartItem.amount += 1;
-                    console.log(cart);
-                    added = true;
-                    return;
+                        cartItem.amount += 1;
+                        added = true;
+                        return;
                 } 
             });
 
             if (!added) {
                 item.amount = 1;
                 cart.push(item);
-                console.log(cart);
             }
         }
 
@@ -71,6 +76,30 @@ angular
                 if (cart[i].id === item.id) {
                     cart.splice(i, 1);
                     return;
+                }
+            }
+        }
+
+        function add (item, amount) {
+            var l = cart.length;
+            for (var i = 0 ; i < l ; i ++ ) {
+                if (cart[i].id === item.id) {
+                    if (cart[i].amount < item.count) {
+                        cart[i].amount += 1;
+                    }
+                    return;
+                }
+            }
+        }
+
+        function removeOneItem (item) {
+            if (item.amount > 1) {
+                var l = cart.length;
+                for (var i = 0 ; i < l ; i ++ ) {
+                    if (cart[i].id === item.id) {
+                        cart[i].amount -= 1;
+                        return;
+                    }
                 }
             }
         }

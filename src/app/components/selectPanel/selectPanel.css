@@ -41,11 +41,15 @@
 	display: none;
 	background-color: #5CA8FF;
 	position: absolute;
-	height: 20%;
+	height: 25%;
 	width: 65%;
 	bottom: 25%;
 	right:0px;
 	z-index: 100;
+}
+
+.aaa:active span{
+	color:lightgray;
 }
 
 
@@ -53,7 +57,7 @@
 	color: white;
 	position: absolute;
 	font-size: 2em;
-	bottom:5px;
+	bottom:25px;
 	right: 20px;
 }
 
@@ -64,6 +68,8 @@
 	font-size: 4em;
 	text-align: center;
 	color: white;
+	top:5px;
+	left: 10px;
 }
 
 .thumbnail:hover .put-to-cart{
@@ -73,4 +79,12 @@
 .go-to-cart span{
 	opacity: 1;
 	font-size: 1.5em;
+}
+
+.available {
+	color: white;
+	position: absolute;
+	font-size: 1.2em;
+	bottom:5px;
+	right: 25px;
 }

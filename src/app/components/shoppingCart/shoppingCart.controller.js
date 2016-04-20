@@ -1,53 +1,103 @@
 (function() {
-    'use strict';
+  'use strict';
 
 angular
     .module('yoman')
     .controller('ShoppingCartController', ShoppingCartController);
 
-  
+  /** @ngInject */
 
-    ShoppingCartController.$inject = ['ShoppingCart'];
+    ShoppingCartController.$inject = ['FirebaseFactory'];
 
-    function ShoppingCartController(ShoppingCart) {
+    function ShoppingCartController(FirebaseFactory) {
+
+
 
         var vm = this;
-        vm.cartItems = [];
-        vm.sum;
-        vm.updteCartItems = updateCartItems;
         vm.removeItem = removeItem;
         vm.add = add;
         vm.removeOneItem = removeOneItem;
+        vm.sum;
         
-    
-        updateCartItems();
+
+        vm.cartItems = [];
+
+        cartItems();
 
 
 
-        function updateCartItems() {
-            console.log('ssss');
-            vm.cartItems = ShoppingCart.readCart();
-            console.log('cartItems' + vm.cartItems);
-            ShoppingCart.sum();
-            vm.sum = ShoppingCart.readSum();
+        function cartItems() {
+            
+            FirebaseFactory.readCart()
+            .then(function(data) {
+                vm.cartItems = data;
+                updateSum();
+            });
         }
+
 
         function removeItem (item) {
-            ShoppingCart.remove(item);
-            updateCartItems();
+
+            FirebaseFactory.removeFromCart(item);
+
+            var l = vm.cartItems.length;
+            for ( var i = 0 ; i < l ; i ++ ) {
+                if ( vm.cartItems[i].id = item.id ) {
+                    vm.cartItems.splice(i, 1);
+                    updateSum();
+                     return;
+                }
+            }
+            updateSum();
         }
 
-        function add (item, amount) {
-            ShoppingCart.add(item, amount);
-            updateCartItems();
+
+        function updateSum () {
+
+            var sum = 0;
+            vm.cartItems.forEach(function(item) {
+                sum += item.price * item.amount;
+            });
+            vm.sum = sum;
         }
+
+
+        function add (item) {
+      
+            FirebaseFactory.addToCart(item)
+            .then(function(item) {
+                var l = vm.cartItems.length;
+                for ( var i = 0 ; i < l ; i ++ ) {
+                    if ( vm.cartItems[i].id === item.id ) {
+                        vm.cartItems[i].amount ++;
+                        updateSum();
+                    return;
+                    }
+                }
+            });
+        }
+
 
         function removeOneItem (item) {
-            ShoppingCart.removeOneItem(item);
+
+            if (item.amount > 1) {
+                FirebaseFactory.removeOneFromCart(item);
+                var l = vm.cartItems.length;
+                for ( var i = 0 ; i < l ; i ++ ) {
+                    if ( vm.cartItems[i].id === item.id ) {
+                        vm.cartItems[i].amount --;
+                        updateSum();
+                        return;
+                    }
+                }
+            } 
         }
 
-        
-    }
+    
+
+   
+  }
 
 
 })();
+

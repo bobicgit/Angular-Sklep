@@ -1,13 +1,13 @@
 (function() {
-    'use strict';
+  'use strict';
 
-angular
+  angular
     .module('yoman')
     .directive('selectPanel', selectPanel);
 
-  
+  /** @ngInject */
     function selectPanel() {
-        var directive = {
+    var directive = {
         restrict: 'E',
         templateUrl: 'app/components/selectPanel/selectPanel.html',
         controller: SelectPanelController,
@@ -18,17 +18,14 @@ angular
 
     return directive;
 
-    SelectPanelController.$inject = ['ShoppingCart', 'FirebaseFactory'];
-    
-    function SelectPanelController(ShoppingCart, FirebaseFactory) {
+    SelectPanelController.$inject = ['FirebaseFactory'];
+    /** @ngInject */
+    function SelectPanelController(FirebaseFactory) {
 
-    
+      // "sp.creationDate" is available by directive option "bindToController: true"
         var vm = this;
 
         vm.allItems = [];
-
-        vm.getItems = getItems;
-          
 
         vm.categories = [];
         vm.filterCategory = { category : vm.category };
@@ -60,29 +57,27 @@ angular
 
         vm.addToCart = addToCart;
 
-        vm.updateCache = updateCache;
-
       
+   
         getItems();
-        
 
 
         function getItems () {
-          return FirebaseFactory.readBase()
-          .then(function (data) { 
-            vm.allItems = data; 
-            updateCategoryList();
-          });
+            return FirebaseFactory.getProduct()
+            .then(function (data) { 
+                vm.allItems = data; 
+                updateCategoryList();
+            });
         }
 
 
         function updateCategoryList () {
-        //sorts data depending on its category
-        // creates array with categories without repeatings
+            //sorts data depending on its category
+            // creates array with categories without repeatings
             vm.allItems.forEach(function (item) {
                 if (vm.categories.includes(item.category) === false) {
                     vm.categories.push(item.category);
-                } 
+                }
             });
         }
 
@@ -118,7 +113,7 @@ angular
 
         function changePagePreview () {
             if (vm.currentPage > 1) {
-                vm.currentPage --;
+              vm.currentPage --;
             }
         }
 
@@ -129,28 +124,22 @@ angular
         function changePictureSize (size) {
             vm.pictureSize = size;
         } 
-      
-        function addToCart (item, amount) {
-            FirebaseFactory.reduceAvailable(item, amount);
-            updateCache(item, amount);
-            ShoppingCart.addToCart(item);
-            ShoppingCart.sum();
-            var cart = ShoppingCart.readCart();
-            var summ = ShoppingCart.readSum();
-        }
+          
+        function addToCart (item) {
 
-        function updateCache (item, amount) {
-            var l = vm.allItems.length;
-            for ( var i = 1 ; i < l ; i++ ) {
-                if ( vm.allItems[i].id === item.id ) {
-                    vm.allItems[i].available -- ;
-                    break;
-                }
-            }
-        }
+            FirebaseFactory.addToCart(item)
+            .then(function() {
+                vm.allItems.forEach(function(cacheItem) {
+                    if (cacheItem.id === item.id) {
+                        cacheItem.available --;
+                    }
+                })
+            });
+        } 
 
-  }  
- }
+
+    }  
+}
 
 
 })();

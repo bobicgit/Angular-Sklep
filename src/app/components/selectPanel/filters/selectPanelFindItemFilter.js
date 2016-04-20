@@ -1,33 +1,35 @@
 (function() {
-    'use strict';
+  'use strict';
 
 angular
-    .module('yoman')
-    .filter('findItemFilter', findItemFilter);
+  .module('yoman')
+  .filter('findItemFilter', findItemFilter);
 
 
-    function findItemFilter () {
 
-        return function (allItems, query) {
+        function findItemFilter () {
 
-            if (!query) { 
 
-                return allItems; 
+        	return function (allItems, query) {
 
-            } else {
+        		if (!query) { 
 
-                var items = [];
-                var regex = new RegExp( query, "g");
+        			return allItems 
 
-                for ( var i = 0 ; i < allItems.length ; i ++ ) {
+        		} else {
 
-                    if ( regex.test(allItems[i].name) ) {
-                    items.push(allItems[i]);
+	                var items = [];
+	                var regex = new RegExp( query, "g");
+
+                    for ( var i = 0 ; i < allItems.length ; i ++ ) {
+
+	                   	if ( regex.test(allItems[i].name) ) {
+	                       items.push(allItems[i]);
+	                   	}
                     }
-                }
-                return items;
-            }  
-        } 
-    }
+                    return items;
+                }  
+            } 
+        }
   
 })();

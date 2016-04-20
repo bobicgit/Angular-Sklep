@@ -1,7 +1,7 @@
 <div class="container">
 
     <div>
-    <acme-navbar creation-date="main.creationDate"></acme-navbar>
+        <acme-navbar creation-date="main.creationDate"></acme-navbar>
     </div>
 
     <div class="jumbotron text-center">
@@ -12,10 +12,23 @@
         </p>
         <p class="animated infinite" ng-class="main.classAnimation"></p>
         <div class="item-in-cart" ng-repeat="item in vm.cartItems">
-            <div class="cart-image-div"><img src="{{item.url}}"/></div>
-            <div class="cart-amount-div"><span>{{item.amount}} pc.</span><div ng-click="vm.add(item, 1)" class="add-one-item"><span class="glyphicon glyphicon-triangle-top"></span></div><div  ng-click="vm.removeOneItem(item)" class="remove-one-item"><span class="glyphicon glyphicon-triangle-bottom"></span></div></div>
-            <div class="cart-sum-div"><span>{{item.price * item.amount | currency}}</span><span style="font-size: 1.3em;" ng-if="item.amount > 1"  > {{item.price | currency}}/pc</span></div>
-            <div class="cart-remove" ng-click="vm.removeItem(item)"><span class="glyphicon glyphicon-remove"></span></div>
+            <div class="cart-image-div">    <img src="{{item.url}}"/></div>
+            <div class="cart-amount-div">
+                <span>{{item.amount}} pc.</span>
+                <div ng-click="vm.add(item)" class="add-one-item">
+                    <span class="glyphicon glyphicon-triangle-top"></span>
+                </div>
+                <div  ng-click="vm.removeOneItem(item)" class="remove-one-item">
+                    <span class="glyphicon glyphicon-triangle-bottom"></span>
+                </div>
+            </div>
+            <div class="cart-sum-div">
+                <span>{{item.price * item.amount | currency}}</span>
+                <span style="font-size: 1.3em;" ng-if="item.amount > 1"  > {{item.price | currency}}/pc</span>
+            </div>
+            <div class="cart-remove" ng-click="vm.removeItem(item)">
+                <span class="glyphicon glyphicon-remove"></span>
+            </div>
         </div>
         <div ng-if="vm.cartItems.length>0">
             <div class="cart-bar"></div>
@@ -30,8 +43,9 @@
         <div ng-if="vm.cartItems<1" class="item-in-cart">
             <h2>Your cart is empty....... </h2>
             <br/>
-            <button class="btn btn-success btn-lg buy"><a href="#/"><b>  back to shop </b></a></button>
         </div>
+        <br/>
+        <button class="btn btn-success btn-lg buy"><a href="#/"><b>  back to shop </b></a></button>
     </div>
 </div>
 

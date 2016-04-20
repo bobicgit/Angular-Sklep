@@ -1,33 +1,35 @@
-(function() {
+ (function() {
   'use strict';
 
-angular
-    .module('yoman')
-    .filter('pagesAmountFilter', pagesAmountFilter);
-
-    function pagesAmountFilter () {
+     angular
+        .module('yoman')
+        .filter('pagesAmountFilter', pagesAmountFilter);
 
 
-        return function (availablePages, allItems, itemsOnPage) {
 
-            var pages = [];
-            var pagesAmount;
+        function pagesAmountFilter () {
 
-            if ( typeof itemsOnPage === 'string') {
 
-                pages.push(1);
-                return pages;
-                
-            } else {
+        	return function (availablePages, allItems, itemsOnPage) {
 
-                pagesAmount = Math.ceil(allItems.length / itemsOnPage);
+                var pages = [];
+                var pagesAmount;
 
-                for ( var i = 1 ; i <= pagesAmount ; i ++ ) {
-                    pages.push(i);
-                }
-                return pages;
-            }
-        }    
-    }
+                if ( typeof itemsOnPage === 'string') {
+                    pages.push(1);
+                    return pages;
+                } else {
+
+                    
+                    
+                    pagesAmount = Math.ceil(allItems.length / itemsOnPage);
+
+                    for ( var i = 1 ; i <= pagesAmount ; i ++ ) {
+                        pages.push(i);
+                    }
+                    return pages;
+                    }
+                }    
+         }
 
 })();

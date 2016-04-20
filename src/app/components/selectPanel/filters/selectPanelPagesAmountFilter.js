@@ -10,7 +10,7 @@
         function pagesAmountFilter () {
 
 
-        	return function (availablePages, allItems, itemsOnPage) {
+            return function (availablePages, allItems, itemsOnPage) {
 
                 var pages = [];
                 var pagesAmount;

@@ -7,9 +7,9 @@ angular
 
   /** @ngInject */
 
-    ShoppingCartController.$inject = ['FirebaseFactory'];
+    ShoppingCartController.$inject = ['FirebaseFactory', 'shoppingCartService'];
 
-    function ShoppingCartController(FirebaseFactory) {
+    function ShoppingCartController(FirebaseFactory, shoppingCartService) {
 
 
 
@@ -32,6 +32,7 @@ angular
             .then(function(data) {
                 vm.cartItems = data;
                 updateSum();
+                shoppingCartService.updateAmount(data);
             });
         }
 
@@ -45,10 +46,11 @@ angular
                 if ( vm.cartItems[i].id = item.id ) {
                     vm.cartItems.splice(i, 1);
                     updateSum();
+                    shoppingCartService.updateAmount(vm.cartItems);
                      return;
                 }
             }
-            updateSum();
+    
         }
 
 

@@ -17,6 +17,16 @@
         controller: 'ShoppingCartController',
         controllerAs: 'vm'
       })
+      .when('/login', {
+        templateUrl: 'app/components/loginPanel/loginPanel.html',
+        controller: 'LoginPanelController',
+        controllerAs: 'vm'
+      })
+      .when('/:item', {
+        templateUrl: 'app/components/productDetails/productDetails.html',
+        controller: 'ProductDetailsController',
+        controllerAs: 'vm'
+      })
       .otherwise({
         redirectTo: '/'
       });

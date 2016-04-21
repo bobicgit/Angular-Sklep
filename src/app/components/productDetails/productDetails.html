@@ -1,0 +1,53 @@
+<div class="container">
+
+    <div>
+        <acme-navbar creation-date="main.creationDate"></acme-navbar>
+    </div>
+
+    <div class="jumbotron text-center">
+        <h1>'{{vm.item.name}}!'</h1>
+        <p class="lead">
+            <img src="assets/images/yeoman.png" alt="I'm Yeoman"><br>
+            Always a pleasure scaffolding your apps.
+        </p>
+        <br/>
+
+        <div class="big-photo">
+        <img src="{{vm.item.url}}" alt="vm.name"/>
+                
+
+        </div>
+        </br>
+        <br/>
+         <p class="ipsum">Lorem ipsum dolor sit amet, mel fabulas officiis probatus te, ad pri doming accusamus, no cum nonumes necessitatibus. Augue legendos an eum, sanctus periculis eu pro. An wisi graece sit, zril sanctus platonem ad pro. Choro habemus cum et, ex volumus singulis nam, ex alii iusto neglegentur quo. Ius id tantas pertinacia omittantur, nonumes constituto ex eam.
+
+Usu verterem praesent ad, utinam noluisse id pro. Ludus fabulas et usu. Sea ei disputando conclusionemque, ea nam sale detraxit, dicit affert iriure vim eu. Sed quot omnium option ne, ex mea natum feugiat alienum.
+
+Errem hendrerit id eos, ea ius tale atqui nonumy. Et per summo soluta, vim insolens inimicus consetetur an. Ne nec legendos adipisci. Has sale repudiare democritum at. Usu ad iusto insolens expetendis, duis posse pri id. Vis at causae blandit repudiandae, vix ad unum nihil.
+
+Eu sea iuvaret scaevola perpetua, ad quot utinam maiestatis nec, sit an voluptua suscipiantur. No sit facete definiebas dissentias. Nihil gloriatur dissentias ei eum, id qui velit dissentiunt. Suas adhuc decore vis ea, natum dictas efficiantur at has.</p>
+        
+        <a class="bbb">
+        <div class="details-buy" ng-click="vm.add(vm.item)">
+            <span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span>
+            <span class="add"> &nbsp;<b> add to cart</b></span>
+            <br/>
+            <span class="availab"><b> {{vm.item.available}}  pc. available!</b></span>
+        </div>
+        </a>
+
+                        
+            
+
+
+
+
+
+      
+
+  <br/>
+  <br/>
+    
+        <button class="btn btn-success btn-lg buy"><a href="#/"><b>  back to shop </b></a></button>
+    </div>
+</div>

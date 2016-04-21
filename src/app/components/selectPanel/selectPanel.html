@@ -66,7 +66,7 @@
                         <li ng-click="vm.updatePage(page)" ng-repeat="page in vm.availablePages | pagesAmountFilter :vm.allItems :vm.itemsOnPageSelected" role="menuitem" getPagesAmount="mv.currentPage === page" ><a>page {{page}}</a></li>
                     </ul>
                 </div>
-                <label class="btn btn-primary my-btn" ng-model="radioModel" ng-disabled="vm.currentPage ===3" ng-click="vm.changePageNext()" uib-btn-radio="'Right'"><b> &nbsp></b</label>
+                <label class="btn btn-primary my-btn" ng-model="radioModel" ng-disabled="vm.currentPage ===3" ng-click="vm.changePageNext()" uib-btn-radio="'Right'"><b>></b</label>
             </div>
 
     <!--  //////////  picture size  /////////// -->
@@ -74,7 +74,7 @@
             <div class="btn-group">
                 <label class="btn btn-primary my-btn" ng-click="vm.changePictureSize('small')" ng-model="radioModel1" uib-btn-radio="'Left'"><b>S</b></label>
                 <label class="btn btn-primary my-btn" ng-click="vm.changePictureSize('medium')" ng-model="radioModel1" uib-btn-radio="'Middle'"><b>M</b></label>
-                <label class="btn btn-primary my-btn" ng-click="vm.changePictureSize('large')" ng-model="radioModel1" uib-btn-radio="'Right'"><b>L</b</label>
+                <label class="btn btn-primary my-btn" ng-click="vm.changePictureSize('large')" ng-model="radioModel1" uib-btn-radio="'Right'"><b>L</b></label>
             </div>
 
     <!--  //////////  search   /////////// -->
@@ -83,12 +83,6 @@
                 <input type="text"  class="form-control" ng-model="vm.findItem" placeholder="find your item">
             </div>
 
-    <!--  //////////  go to cart   /////////// -->
-
-            <div class="btn-group">
-                <button class="btn btn-primary my-btn go-to-cart"><a href="#/cart"><span>&nbsp&nbsp&nbsp&nbsp<span class="glyphicon glyphicon-shopping-cart" aria-hidden="true">&nbsp</span></span></a></button>
-            </div>
-            
             <br/>
             <br/>
       
@@ -103,14 +97,16 @@
             <div class="thumbnail">
                 <div class="picture-div">
                     <a class="aaa">
-                        <div class="put-to-cart" ng-click="vm.addToCart(item, 1)">
+                        <div class="put-to-cart" ng-click="vm.addToCart(item)">
                             <span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span>
                             <span class="add-to-cart">add to cart</span>
                             <br/>
                             <span class="available">{{item.available}} pc. available!</span>
                         </div>
-                        <img class="pull-right" style="width:100%;height:100%;overflow: hidden;" ng-src="{{ item.url }}" alt="{{ item.name }}">
-                    </a>
+                        </a>
+                        <a href="#/{{item.name}}">
+                        <img class="pull-right" style="width:100%;height:100%;overflow: hidden;" ng-src="{{ item.url }}" alt="{{ item.name }}"></a>
+                    
                 </div>
                 <div class="caption1">
                     <h3 class="items-name">{{ item.name }}   {{item.price | currency }}</h3>
@@ -118,3 +114,4 @@
             </div>
         </div>
     </div>
+</div>  

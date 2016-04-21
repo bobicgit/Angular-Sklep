@@ -1,3 +1,23 @@
 .acme-navbar-text {
   color: white;
 }
+
+.go-to-cart {
+	font-size: 2em;
+	text-decoration: none;
+}
+
+a:visited {
+    color: white;
+    text-decoration: none;
+}
+
+a:hover {
+    color: white;
+    text-decoration: none;
+}
+
+a:active {
+	
+}
+

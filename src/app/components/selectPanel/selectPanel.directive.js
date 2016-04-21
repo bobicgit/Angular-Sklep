@@ -18,9 +18,9 @@
 
     return directive;
 
-    SelectPanelController.$inject = ['FirebaseFactory'];
+    SelectPanelController.$inject = ['FirebaseFactory', 'shoppingCartService'];
     /** @ngInject */
-    function SelectPanelController(FirebaseFactory) {
+    function SelectPanelController(FirebaseFactory, shoppingCartService) {
 
       // "sp.creationDate" is available by directive option "bindToController: true"
         var vm = this;
@@ -57,17 +57,25 @@
 
         vm.addToCart = addToCart;
 
+        vm.active = true;
+
       
    
-        getItems();
+        initialize();
 
 
-        function getItems () {
-            return FirebaseFactory.getProduct()
+        function initialize () {
+            FirebaseFactory.getProducts()
             .then(function (data) { 
                 vm.allItems = data; 
                 updateCategoryList();
             });
+            
+            FirebaseFactory.readCart()
+            .then(function(data) {
+                shoppingCartService.updateAmount(data);
+            });
+        
         }
 
 
@@ -126,15 +134,19 @@
         } 
           
         function addToCart (item) {
+            if (vm.active) {
+                vm.active = false;
 
-            FirebaseFactory.addToCart(item)
-            .then(function() {
-                vm.allItems.forEach(function(cacheItem) {
-                    if (cacheItem.id === item.id) {
-                        cacheItem.available --;
-                    }
-                })
-            });
+                FirebaseFactory.addToCart(item)
+                .then(function() {
+                    vm.allItems.forEach(function(cacheItem) {
+                        vm.active = true;
+                        if (cacheItem.id === item.id) {
+                            cacheItem.available --;
+                        }
+                    });
+                });
+            }
         } 
 
 

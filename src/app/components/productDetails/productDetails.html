@@ -5,7 +5,7 @@
     </div>
 
     <div class="jumbotron text-center">
-        <h1>'{{vm.item.name}}!'</h1>
+        <h1>'{{vm.item.name}}  {{vm.item.price | currency}}!'</h1>
         <p class="lead">
             <img src="assets/images/yeoman.png" alt="I'm Yeoman"><br>
             Always a pleasure scaffolding your apps.
@@ -28,7 +28,8 @@ Errem hendrerit id eos, ea ius tale atqui nonumy. Et per summo soluta, vim insol
 Eu sea iuvaret scaevola perpetua, ad quot utinam maiestatis nec, sit an voluptua suscipiantur. No sit facete definiebas dissentias. Nihil gloriatur dissentias ei eum, id qui velit dissentiunt. Suas adhuc decore vis ea, natum dictas efficiantur at has.</p>
         
         <a class="bbb">
-        <div class="details-buy" ng-click="vm.add(vm.item)">
+        <div class="added-to-cart-details" ng-if="vm.item.animate"><span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span><span class="added-details">  &nbsp; added!<span></div>
+        <div class="details-buy" ng-hide="vm.item.animate" ng-click="vm.add(vm.item)">
             <span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span>
             <span class="add"> &nbsp;<b> add to cart</b></span>
             <br/>
@@ -36,18 +37,29 @@ Eu sea iuvaret scaevola perpetua, ad quot utinam maiestatis nec, sit an voluptua
         </div>
         </a>
 
-                        
-            
-
-
-
-
-
-      
-
   <br/>
   <br/>
     
         <button class="btn btn-success btn-lg buy"><a href="#/"><b>  back to shop </b></a></button>
+         <button class="btn btn-warning btn-lg add-comment" ng-click="vm.showCommentInput()"><b ng-hide="vm.inputActive">  Add comment </b ><b ng-if="vm.inputActive">close form</b></button>
+
+
+            <br/>
+            <br/>
+            <form ng-if="vm.inputActive" ng-submit="vm.sendComment()">
+            <textarea class="commentInput" ng-model="vm.comment" rows="4" cols="50" maxlength="300" placeholder="write your comment here" required>
+            </textarea>
+            <br/>
+            <input class="commentInput"  ng-model="vm.commentAuthor" placeholder="your name" maxlength="50" required>
+            <br/>
+            <br/>
+            <button type="submit"  class="btn btn-warning btn-lg" ><b>send comment</b></button>
+            </form>
+            <br/>
+            <div class="comment" ng-repeat="a in vm.comments">
+            <p>{{a.comment}}</p>
+            <p ><b>{{a.author}}</b><span class="date">&nbsp;&nbsp;{{a.date}}</span></p>
+            </div>
+
     </div>
 </div>

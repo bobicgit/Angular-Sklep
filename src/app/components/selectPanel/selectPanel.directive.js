@@ -20,12 +20,13 @@
 
     SelectPanelController.$inject = ['FirebaseFactory', 'shoppingCartService'];
     /** @ngInject */
-    function SelectPanelController(FirebaseFactory, shoppingCartService) {
+    function SelectPanelController($timeout, FirebaseFactory, shoppingCartService) {
 
       // "sp.creationDate" is available by directive option "bindToController: true"
         var vm = this;
 
         vm.allItems = [];
+        vm.itemsFiltered = vm.allItems;
 
         vm.categories = [];
         vm.filterCategory = { category : vm.category };
@@ -52,6 +53,8 @@
         vm.changePagePreview = changePagePreview;
         vm.changePageNext = changePageNext;
 
+        vm.filterItems = filterItems;
+
         vm.changePictureSize = changePictureSize;
         vm.pictureSize;
 
@@ -68,6 +71,7 @@
             FirebaseFactory.getProducts()
             .then(function (data) { 
                 vm.allItems = data; 
+                vm.itemsFiltered = data;
                 updateCategoryList();
             });
             
@@ -133,6 +137,25 @@
             vm.pictureSize = size;
         } 
           
+
+        function filterItems () {  
+
+            if (vm.findItem === "") { 
+                vm.itemsFiltered = vm.allItems; 
+            } else {
+                vm.itemsFiltered = [];
+                var regex = new RegExp( vm.findItem, "g");
+
+                for ( var i = 0 ; i < vm.allItems.length ; i ++ ) {
+                    if( regex.test(vm.allItems[i].name) ) {
+                        vm.itemsFiltered.push(vm.allItems[i]);
+                    }
+                }
+            }
+        }
+
+
+
         function addToCart (item) {
             if (vm.active) {
                 vm.active = false;
@@ -141,6 +164,8 @@
                 .then(function() {
                     vm.allItems.forEach(function(cacheItem) {
                         vm.active = true;
+                        item.animate = true;
+                        $timeout(function() {item.animate = false}, 1000);
                         if (cacheItem.id === item.id) {
                             cacheItem.available --;
                         }

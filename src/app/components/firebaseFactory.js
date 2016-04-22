@@ -18,7 +18,8 @@ angular
             removeFromCart: removeFromCart,
             makeAvailable: makeAvailable,
             removeOneFromCart: removeOneFromCart,
-            getItem:getItem
+            getItem:getItem,
+            storeComment: storeComment
         }
 
 
@@ -97,7 +98,6 @@ angular
                 function addNewToCart () {
                     if (added === false) {
                         shoppingCartService.addOne();
-                        shoppingCartService.getAmount();
                         newItem.amount = 1;
                         console.log('dodano nowy do koszyka');
                         ref.push(newItem);
@@ -183,12 +183,30 @@ angular
             ref.once("value", function(snapshot) {
                 snapshot.forEach(function(childSnapshot) {
                     if (childSnapshot.val().name === name) { 
-                        var item = childSnapshot.val();
+                        var item = [];
+                        item.push(childSnapshot.val());
+                        var comments = [];
+                        childSnapshot.child('comments')
+                        .forEach(function(childSnapshot) {
+                            comments.push(childSnapshot.val());
+                        });
+                        item.push(comments);
                         dupa.resolve(item);
                     }
                 });
             });
             return dupa.promise;
+        }
+
+        function storeComment (comment, author, date, itemName) {
+            var ref = new Firebase('https://boiling-heat-8208.firebaseio.com/items');
+            ref.once("value", function(snapshot) {
+                snapshot.forEach(function(childSnapshot) {
+                    if (childSnapshot.val().name === itemName) { 
+                        ref.child(childSnapshot.key()).child('comments').push({comment: comment, author: author, date: date});
+                    }
+                });
+            });
         }
 
         

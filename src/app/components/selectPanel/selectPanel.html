@@ -80,7 +80,7 @@
     <!--  //////////  search   /////////// -->
 
             <div class="btn-group my-btn my-input">
-                <input type="text"  class="form-control" ng-model="vm.findItem" placeholder="find your item">
+                <input type="text"  class="form-control" ng-change="vm.filterItems()" ng-model="vm.findItem" placeholder="find your item">
             </div>
 
             <br/>
@@ -93,11 +93,12 @@
 
 
     <div class="row">
-        <div class="col-sm-6 col-md-4 " ng-class="{smallPicture: vm.pictureSize === 'small', mediumPicture: vm.pictureSize === 'medium', largePicture: vm.pictureSize === 'large'}" ng-repeat="item in vm.allItems | filter : vm.filterCategory | priceFilter :vm.priceMin :vm.priceMax | paginationFilter: vm.itemsOnPageSelected :vm.currentPage | findItemFilter :vm.findItem ">
+        <div class="col-sm-6 col-md-4 " ng-class="{smallPicture: vm.pictureSize === 'small', mediumPicture: vm.pictureSize === 'medium', largePicture: vm.pictureSize === 'large'}" ng-repeat="item in vm.itemsFiltered | filter : vm.filterCategory | priceFilter :vm.priceMin :vm.priceMax | paginationFilter: vm.itemsOnPageSelected :vm.currentPage">
             <div class="thumbnail">
                 <div class="picture-div">
                     <a class="aaa">
-                        <div class="put-to-cart" ng-click="vm.addToCart(item)">
+                        <div class="added-to-cart" ng-if="item.animate"><span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span><span class="added">added!<span></div>
+                        <div class="put-to-cart" ng-hide="item.animate" ng-click="vm.addToCart(item)">
                             <span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span>
                             <span class="add-to-cart">add to cart</span>
                             <br/>
@@ -115,3 +116,6 @@
         </div>
     </div>
 </div>  
+
+
+<!--| findItemFilter :vm.findItem -->

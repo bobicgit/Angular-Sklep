@@ -39,11 +39,13 @@ angular
 
         function removeItem (item) {
 
+            console.log(item);
+
             FirebaseFactory.removeFromCart(item);
 
             var l = vm.cartItems.length;
             for ( var i = 0 ; i < l ; i ++ ) {
-                if ( vm.cartItems[i].id = item.id ) {
+                if ( vm.cartItems[i].id === item.id ) {
                     vm.cartItems.splice(i, 1);
                     updateSum();
                     shoppingCartService.updateAmount(vm.cartItems);

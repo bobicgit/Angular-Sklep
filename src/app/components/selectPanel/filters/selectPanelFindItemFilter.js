@@ -1,35 +1,35 @@
-(function() {
-  'use strict';
+// (function() {
+//   'use strict';
 
-angular
-  .module('yoman')
-  .filter('findItemFilter', findItemFilter);
-
-
-
-        function findItemFilter () {
+// angular
+//   .module('yoman')
+//   .filter('findItemFilter', findItemFilter);
 
 
-            return function (allItems, query) {
 
-                if (!query) { 
+//         function findItemFilter () {
 
-                    return allItems 
 
-                } else {
+//             return function (allItems, query) {
 
-                    var items = [];
-                    var regex = new RegExp( query, "g");
+//                 if (!query) { 
 
-                    for ( var i = 0 ; i < allItems.length ; i ++ ) {
+//                     return allItems 
 
-                        if ( regex.test(allItems[i].name) ) {
-                            items.push(allItems[i]);
-                        }
-                    }
-                    return items;
-                }  
-            } 
-        }
+//                 } else {
+
+//                     var items = [];
+//                     var regex = new RegExp( query, "g");
+
+//                     for ( var i = 0 ; i < allItems.length ; i ++ ) {
+
+//                         if ( regex.test(allItems[i].name) ) {
+//                             items.push(allItems[i]);
+//                         }
+//                     }
+//                     return items;
+//                 }  
+//             } 
+//         }
   
-})();
+// })();

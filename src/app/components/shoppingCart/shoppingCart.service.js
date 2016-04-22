@@ -11,21 +11,20 @@ angular
 
         var self = this;
 
-        self.itemsInCart = 0;
+        self.cart = {
+            itemsAmount: 0
+        };
+    
         self.updateAmount = updateAmount;
-        self.getAmount = getAmount;
         self.addOne = addOne;
 
         function updateAmount (items) {
-            self.itemsInCart = items.length; 
-        }
-
-        function getAmount () {
-            return self.itemsInCart;
+            self.cart.itemsAmount = items.length;
         }
 
         function addOne () {
-            self.itemsInCart ++;
+            self.cart.itemsAmount ++;
+            console.log(self.cart.itemsAmount);
         }
 
 

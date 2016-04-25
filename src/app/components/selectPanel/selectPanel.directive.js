@@ -7,6 +7,7 @@
 
   /** @ngInject */
     function selectPanel() {
+
     var directive = {
         restrict: 'E',
         templateUrl: 'app/components/selectPanel/selectPanel.html',
@@ -19,11 +20,24 @@
     return directive;
 
     SelectPanelController.$inject = ['FirebaseFactory', 'shoppingCartService'];
-    /** @ngInject */
-    function SelectPanelController($timeout, FirebaseFactory, shoppingCartService) {
+    
+    function SelectPanelController($scope, $window, $timeout, FirebaseFactory, shoppingCartService) {
 
       // "sp.creationDate" is available by directive option "bindToController: true"
         var vm = this;
+
+        
+        vm.selectClass = '';
+        $window.onscroll = function() {
+            $scope.$apply(function () {
+                if ($window.pageYOffset > 320) {
+                    vm.selectClass = 'select-panel-fixed';
+                } else {
+                    vm.selectClass = '';
+                }
+            }) 
+        }
+
 
         vm.allItems = [];
         vm.itemsFiltered = vm.allItems;
@@ -42,7 +56,7 @@
         vm.updatePriceMax = updatePriceMax;
 
         vm.itemsOnPage = [10, 20, 30, 'all'];
-        vm.itemsOnPageSelected = 10;
+        vm.itemsOnPageSelected = 30;
         vm.updateItemsOnPageAmount = updateItemsOnPageAmount;
 
         vm.availablePages;
@@ -56,7 +70,7 @@
         vm.filterItems = filterItems;
 
         vm.changePictureSize = changePictureSize;
-        vm.pictureSize;
+        vm.pictureSize = 'small';
 
         vm.addToCart = addToCart;
 
@@ -66,6 +80,8 @@
    
         initialize();
 
+
+        // downloads products data from database and updates cart counter
 
         function initialize () {
             FirebaseFactory.getProducts()
@@ -136,7 +152,10 @@
         function changePictureSize (size) {
             vm.pictureSize = size;
         } 
-          
+        
+
+
+        // it filters items on query given in text input
 
         function filterItems () {  
 
@@ -154,25 +173,30 @@
             }
         }
 
-
+        // adding product to the cart
+        // vm.active is a flag which ensure that only one request can be sended at the time
 
         function addToCart (item) {
             if (vm.active) {
                 vm.active = false;
-
+                
                 FirebaseFactory.addToCart(item)
                 .then(function() {
                     vm.allItems.forEach(function(cacheItem) {
-                        vm.active = true;
                         item.animate = true;
                         $timeout(function() {item.animate = false}, 1000);
                         if (cacheItem.id === item.id) {
                             cacheItem.available --;
                         }
+                        vm.active = true;
                     });
-                });
+                }, function () {vm.active = true});
             }
         } 
+
+        function func () {
+            console.log('ddd');
+        }
 
 
     }  

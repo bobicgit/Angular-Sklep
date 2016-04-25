@@ -29,9 +29,9 @@ Eu sea iuvaret scaevola perpetua, ad quot utinam maiestatis nec, sit an voluptua
         
         <a class="bbb">
         <div class="added-to-cart-details" ng-if="vm.item.animate"><span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span><span class="added-details">  &nbsp; added!<span></div>
-        <div class="details-buy" ng-hide="vm.item.animate" ng-click="vm.add(vm.item)">
+        <div class="details-buy" ng-class="{'no-available' : vm.item.available === 0}" ng-hide="vm.item.animate" ng-click="vm.add(vm.item)">
             <span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span>
-            <span class="add"> &nbsp;<b> add to cart</b></span>
+            <span class="add" ng-if="vm.item.available > 0"> &nbsp;<b> add to cart</b></span>
             <br/>
             <span class="availab"><b> {{vm.item.available}}  pc. available!</b></span>
         </div>
@@ -40,13 +40,13 @@ Eu sea iuvaret scaevola perpetua, ad quot utinam maiestatis nec, sit an voluptua
   <br/>
   <br/>
     
-        <button class="btn btn-success btn-lg buy"><a href="#/"><b>  back to shop </b></a></button>
+        <a href="#/"><button class="btn btn-success btn-lg buy"><b>  back to shop </b></button></a>
          <button class="btn btn-warning btn-lg add-comment" ng-click="vm.showCommentInput()"><b ng-hide="vm.inputActive">  Add comment </b ><b ng-if="vm.inputActive">close form</b></button>
 
 
             <br/>
             <br/>
-            <form ng-if="vm.inputActive" ng-submit="vm.sendComment()">
+            <form name="myForm" ng-if="vm.inputActive" ng-submit="myForm.$valid && vm.sendComment()">
             <textarea class="commentInput" ng-model="vm.comment" rows="4" cols="50" maxlength="300" placeholder="write your comment here" required>
             </textarea>
             <br/>

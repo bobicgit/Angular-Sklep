@@ -12,7 +12,7 @@
 
         return function (allItems, itemsOnPage, pageNumber) {
 
-            if ( typeof itemsOnPage === 'string') {
+            if ( angular.isString(itemsOnPage)) {
                 return allItems;
             } else {
 

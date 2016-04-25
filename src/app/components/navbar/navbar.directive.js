@@ -24,12 +24,9 @@
     NavbarController.$inject = ['shoppingCartService'];
 
     function NavbarController(shoppingCartService) {
+
       var vm = this;
-
       vm.cart = shoppingCartService.cart;
-
-      // "vm.creationDate" is available by directive option "bindToController: true"
-      vm.relativeDate = moment(vm.creationDate).fromNow();
 
       
     }

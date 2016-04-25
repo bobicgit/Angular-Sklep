@@ -15,7 +15,7 @@
                 var pages = [];
                 var pagesAmount;
 
-                if ( typeof itemsOnPage === 'string') {
+                if ( angular.isString(itemsOnPage)) {
                     pages.push(1);
                     return pages;
                 } else {

@@ -22,7 +22,7 @@
         controller: 'LoginPanelController',
         controllerAs: 'vm'
       })
-      .when('/:item', {
+      .when('/:id', {
         templateUrl: 'app/components/productDetails/productDetails.html',
         controller: 'ProductDetailsController',
         controllerAs: 'vm'

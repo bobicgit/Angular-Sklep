@@ -12,7 +12,7 @@
         </p>
         <p class="animated infinite" ng-class="main.classAnimation"></p>
         <div class="item-in-cart" ng-repeat="item in vm.cartItems">
-            <div class="cart-image-div">    <img src="{{item.url}}"/></div>
+            <div class="cart-image-div">    <a href="#/{{item.id}}"><img src="{{item.url}}"/></div></a>
             <div class="cart-amount-div">
                 <span>{{item.amount}} pc.</span>
                 <div ng-click="vm.add(item)" class="add-one-item">
@@ -45,7 +45,7 @@
             <br/>
         </div>
         <br/>
-        <button class="btn btn-success btn-lg buy"><a href="#/"><b>  back to shop </b></a></button>
+        <a href="#/"><button class="btn btn-success btn-lg buy"><b>  back to shop </b></button></a>
     </div>
 </div>
 

@@ -5,7 +5,6 @@ angular
     .module('yoman')
     .controller('ShoppingCartController', ShoppingCartController);
 
-  /** @ngInject */
 
     ShoppingCartController.$inject = ['FirebaseFactory', 'shoppingCartService'];
 
@@ -18,15 +17,17 @@ angular
         vm.add = add;
         vm.removeOneItem = removeOneItem;
         vm.sum;
+        vm.active = true;
         
 
         vm.cartItems = [];
 
-        cartItems();
+        readCart();
 
 
+        //It download cart items from database and updates the total cost
 
-        function cartItems() {
+        function readCart() {
             
             FirebaseFactory.readCart()
             .then(function(data) {
@@ -37,9 +38,8 @@ angular
         }
 
 
-        function removeItem (item) {
 
-            console.log(item);
+        function removeItem (item) {
 
             FirebaseFactory.removeFromCart(item);
 
@@ -66,19 +66,28 @@ angular
         }
 
 
+        // adding product to the cart
+        // vm.active is a flag which ensure that only one request can be sended at the time
+
         function add (item) {
+
+            if (vm.active) {
+                vm.active = false;
       
-            FirebaseFactory.addToCart(item)
-            .then(function(item) {
-                var l = vm.cartItems.length;
-                for ( var i = 0 ; i < l ; i ++ ) {
-                    if ( vm.cartItems[i].id === item.id ) {
-                        vm.cartItems[i].amount ++;
-                        updateSum();
-                    return;
+                FirebaseFactory.addToCart(item)
+                .then(function(item) {
+                    vm.active = true;
+                    var l = vm.cartItems.length;
+                    for ( var i = 0 ; i < l ; i ++ ) {
+                        if ( vm.cartItems[i].id === item.id ) {
+                            vm.cartItems[i].amount ++;
+                            updateSum();
+                        return;
+                        }
                     }
-                }
-            });
+                },
+                function () {vm.active = true});
+            }
         }
 
 

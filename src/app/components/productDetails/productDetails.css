@@ -112,3 +112,7 @@ a b{
 .added-to-cart-details .glyphicon {
 	font-size: 4.5em;
 }
+
+.no-available {
+	background-color: lightgray;
+}

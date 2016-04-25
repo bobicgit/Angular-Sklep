@@ -1,10 +1,47 @@
+.container-fluid {
+	
+	background-color: #2658AD;
+	height: 70px;
+	position: fixed;
+	z-index: 500;
+
+}
+
+
+@media (min-width: 1200px) {
+	.container-fluid {
+	    width: 1140px;
+	}
+}
+
+@media (max-width: 992px) {
+	.container-fluid {
+	    width: 940px;
+	}
+}
+@media (max-width: 768px) {
+	.container-fluid {
+	    width: 910px;
+	}
+}
+
+.navbar-collapse {
+	width: 100%;
+}
+
+
+
+
 .acme-navbar-text {
   color: white;
 }
 
 .go-to-cart {
+	position: relative;
+	height: 100%;
 	font-size: 2em;
 	text-decoration: none;
+	bottom: -10px;
 }
 
 a:visited {
@@ -21,3 +58,42 @@ a:active {
 	
 }
 
+  
+.navbar-rigth {
+	position: relative;
+	float:right;
+}
+
+.navbar-header {
+	position: relative;
+	width: 100%;
+	padding:0px;
+}
+
+
+
+.navbar-left {
+	height: 65px;
+	display: inline-block;
+	margin-left: 30px;
+}
+
+.navbar-right {
+	float:right;
+	margin-right: 10px;
+}
+
+.login {
+	bottom:-22px;
+}
+.cart {
+	bottom :1px;
+}
+
+.home {
+	top: 10px;
+}
+
+.glyphicon-home {
+	font-size: 3em;
+}

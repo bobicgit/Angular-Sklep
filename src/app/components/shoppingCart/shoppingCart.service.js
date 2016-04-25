@@ -24,7 +24,6 @@ angular
 
         function addOne () {
             self.cart.itemsAmount ++;
-            console.log(self.cart.itemsAmount);
         }
 
 

@@ -19,7 +19,7 @@
 
           
       <div class="wrapper">
-    <form class="form-signin">       
+    <form name="myForm" class="form-signin" ng-submit="myForm.$valid && vm.logUser()">       
       <h2 class="form-signin-heading">Please login</h2>
       <br/>
       <input type="text" class="form-control" name="username" placeholder="Login" required autofocus />
@@ -28,8 +28,9 @@
       <br/> 
       <button class="btn btn-lg btn-primary btn-block" type="submit">Login</button>  
       <br/> 
-      <button class="btn btn-lg btn-primary btn-block" type="submit">don't have account yet ?</button> 
-    </form>
+      </form>
+      <button class="btn btn-lg btn-primary btn-block sign-up">don't have account yet? Sign up !</button> 
+    
   </div>
 
   <br/>

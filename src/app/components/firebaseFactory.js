@@ -38,11 +38,10 @@ angular
                     items.push(item);
                 });
                 deferred.resolve(items);
-            },  function (errorObject) {
-                console.log("The read failed: " + errorObject.code);
             });
             return deferred.promise;
         }
+
 
         function readCart () {
             var cart;
@@ -55,8 +54,6 @@ angular
                     cart.push(item);
                 });
                 deferred.resolve(cart);
-            },  function (errorObject) {
-                console.log("The read failed: " + errorObject.code);
             });
             return deferred.promise;
         }
@@ -87,7 +84,6 @@ angular
                         if (childSnapshot.val().id === newItem.id) { 
                             var newAmount = childSnapshot.val().amount + 1;
                             ref.child(childSnapshot.key()).update({amount: newAmount});
-                            console.log('zwiększono ilość w koszyku');
                             added = true;
                         }
                     });
@@ -99,16 +95,17 @@ angular
                     if (added === false) {
                         shoppingCartService.addOne();
                         newItem.amount = 1;
-                        console.log('dodano nowy do koszyka');
                         ref.push(newItem);
                     }
                 }    
                 
-            });
+            }, function () {dup.reject();});
 
           return dup.promise;  
         }
 
+
+        //updates the amount of available items in the shop
 
         function reduceAvailable (item) {
 
@@ -121,6 +118,8 @@ angular
                             var newAvailable = childSnapshot.val().available - 1;
                             ref.child(childSnapshot.key()).update({available: newAvailable});
                             dupa.resolve(item);
+                        } else {
+                        dupa.reject();
                         }
                     }
                 });
@@ -128,6 +127,8 @@ angular
             return dupa.promise;
         }
 
+
+        // removes all items from cart
 
         function removeFromCart (item) {
 
@@ -139,7 +140,6 @@ angular
                     if (childSnapshot.val().id === item.id) { 
                         amount = childSnapshot.val().amount;
                         ref.child(childSnapshot.key()).remove();
-                        console.log('usunięto z koszyka');
                     }
                 });
                 makeAvailable (item, amount);
@@ -155,13 +155,14 @@ angular
                     if (childSnapshot.val().id === item.id) { 
                         var newAmount = childSnapshot.val().amount -1 ;
                         ref.child(childSnapshot.key()).update({amount: newAmount});
-                        console.log('usunięto z koszyka');
                     }
                 });
                 makeAvailable (item, 1);
             });
         }
 
+
+        // it gives back the amount of product removed from te cart
 
         function makeAvailable (item, amount) {
             
@@ -176,33 +177,41 @@ angular
             });
         }
 
-        function getItem (name) {
+        // it downloads product data depending on loction hash
+        // comments are put to other table for convenience
+
+
+        function getItem (id) {
 
             var dupa = $q.defer();
-            var ref = new Firebase('https://boiling-heat-8208.firebaseio.com/items');
+            var ref = new Firebase('https://boiling-heat-8208.firebaseio.com/items/' + id );
             ref.once("value", function(snapshot) {
+                var item = [];
+                var data = {};
+                var comments = [];
+
                 snapshot.forEach(function(childSnapshot) {
-                    if (childSnapshot.val().name === name) { 
-                        var item = [];
-                        item.push(childSnapshot.val());
-                        var comments = [];
-                        childSnapshot.child('comments')
-                        .forEach(function(childSnapshot) {
-                            comments.push(childSnapshot.val());
+                   if (childSnapshot.key() === 'comments') { 
+                        childSnapshot.forEach(function(childSnapshott) {
+                            comments.push(childSnapshott.val());
                         });
-                        item.push(comments);
-                        dupa.resolve(item);
+                    } else {
+                        data[childSnapshot.key()] = childSnapshot.val();
                     }
-                });
+                 });
+                item.push(data);
+                item.push(comments);
+                dupa.resolve(item);
             });
             return dupa.promise;
         }
 
-        function storeComment (comment, author, date, itemName) {
+
+        function storeComment (comment, author, date, itemId) {
             var ref = new Firebase('https://boiling-heat-8208.firebaseio.com/items');
             ref.once("value", function(snapshot) {
                 snapshot.forEach(function(childSnapshot) {
-                    if (childSnapshot.val().name === itemName) { 
+                    if (childSnapshot.val().id === itemId) { 
                         ref.child(childSnapshot.key()).child('comments').push({comment: comment, author: author, date: date});
                     }
                 });
@@ -215,3 +224,14 @@ angular
 
 
 })();
+
+
+// ref.once("value", function(snapshot) {
+//     snapshot.forEach(function(childSnapshot) { 
+//          childSnapshot.forEach(function(cchildSnapshot) {
+//             if (cchildSnapshot.key() ==='id') { 
+//                        ref.child(childSnapshot.key()).update({id:childSnapshot.key()}) ;
+//                     }
+//                  });
+//             });
+//         });

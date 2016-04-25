@@ -1,19 +1,36 @@
-<nav class="navbar navbar-static-top navbar-inverse">
-  <div class="container-fluid">
-    <div class="navbar-header">
-      <a class="navbar-brand" href="#/">
-        <span class="glyphicon glyphicon-home"></span ><b class="go-to-cart"> Home</b>
+<nav class="nav">
+<div class="container-fluid">
+ <div class="navbar-header">
+
+  <div class="navbar-header-2">
+    <div class="navbar-left">
+    <a href="#/">
+       <span class="glyphicon glyphicon-home home"></span><b class="go-to-cart">  Home</b>
       </a>
     </div>
-
+    
+    <div class="navbar-left">
+      <a ng-href="#/login"><span><b class="go-to-cart login">Log in</b></span></a>
+      
+    </div>
+    <div class="navbar-right">
+      <a href="#/cart"><b class="go-to-cart cart">{{vm.cart.itemsAmount}} items in</b><span class="glyphicon glyphicon-shopping-cart"></span><b class="go-to-cart cart">&nbsp; cart &nbsp;</b></a>
+    </div>
+  </div>
+   <!--  <div>
+      <a class="navbar-brand" href="#/">
+        <span class="glyphicon glyphicon-home"></span><b class="go-to-cart"> Home</b>
+      </a>
+    </div>
+ 
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-6">
       <ul class="nav navbar-nav">
         <li class="active"><a ng-href="#/login"><span><b class="go-to-cart">Log in</b></span></a></li>
       </ul>
-
-      <ul class="nav navbar-nav navbar-right acme-navbar-text">
-        <a href="#/cart"><li class="active"><b class="go-to-cart">{{vm.cart.itemsAmount}} items in</b><span class="glyphicon glyphicon-shopping-cart"></span><b class="go-to-cart">&nbsp; cart &nbsp;</b></li></a>
-      </ul>
     </div>
+    <div class="nav navbar-nav navbar-right acme-navbar-text active">
+        <a href="#/cart">><b class="go-to-cart">{{vm.cart.itemsAmount}} items in</b><span class="glyphicon glyphicon-shopping-cart"></span><b class="go-to-cart">&nbsp; cart &nbsp;</b></a>
+      </div> -->
+  </div>
   </div>
 </nav>

@@ -18,20 +18,61 @@
 
 
           
-      <div class="wrapper">
-    <form name="myForm" class="form-signin" ng-submit="myForm.$valid && vm.logUser()">       
-      <h2 class="form-signin-heading">Please login</h2>
-      <br/>
-      <input type="text" class="form-control" name="username" placeholder="Login" required autofocus />
-      <br/>
-      <input type="password" class="form-control" name="password" placeholder="Password" required=""/>     
-      <br/> 
-      <button class="btn btn-lg btn-primary btn-block" type="submit">Login</button>  
-      <br/> 
-      </form>
-      <button class="btn btn-lg btn-primary btn-block sign-up">don't have account yet? Sign up !</button> 
-    
-  </div>
+      <div class="wrapper-login" ng-if="!vm.signUp">
+          <form name="myForm1" class="form-signin" ng-submit="myForm1.$valid && vm.authUser(vm.loginEmail, vm.loginPassword)">       
+          <h2 class="form-signin-heading">Please login</h2>
+          <br/>
+          <input type="text" class="form-control" name="username" placeholder="Login" ng-model="vm.loginEmail" required autofocus />
+          <br/>
+          <input type="password" class="form-control" name="password" placeholder="Password" ng-model="vm.loginPassword" required=""/>     
+          <br/> 
+          <button class="btn btn-lg btn-primary btn-block" type="submit">Login</button>  
+          <br/> 
+          </form>
+          <button class="btn btn-lg btn-primary btn-block sign-up" ng-click="vm.toggleSignUp()">don't have account yet? Sign up !</button> 
+      </div>
+
+
+      <div class="wrapper" ng-if="vm.signUp">
+          <form name="myForm2" class="form-signin" ng-submit="myForm2.$valid && vm.addUser(vm.email, vm.password)">       
+            <h2 class="form-signin-heading">Create new Account</h2>
+            <br/>
+            <div class="signUp-form">
+              <div class="signUp-form-left">
+                <h5 class="form-label">first name</h5>
+                <input type="text" class="form-control" placeholder="first name" ng-model="vm.firstName" required autofocus />
+                <h5 class="form-label">surname</h5>
+                <input type="text" class="form-control" placeholder="surname" ng-model="vm.surname" required/>  
+                <h5 class="form-label">email adrress</h5>
+                <input type="text" class="form-control" placeholder="email adrress" ng-model="vm.email" required/>   
+                <h5 class="form-label">password</h5>
+                <input type="password" class="form-control" placeholder="password" ng-model="vm.password" required/>
+                <h5 class="form-label">repeated password</h5>
+                <input type="password" class="form-control" placeholder="Repeat your password" required/> 
+              </div>
+              <div class="signUp-form-right">
+                <h5 class="form-label">phone number</h5>
+                <input type="text" class="form-control" placeholder="phone number" ng-model="vm.phoneNumber" required autofocus />
+                <h5 class="form-label">address: street, home number</h5>
+                <input type="text" class="form-control" placeholder="address: street, home number" ng-model="vm.addressStreet" required/>    
+                <h5 class="form-label">address: post code</h5>
+                <input type="text" class="form-control" placeholder="address: post code" ng-model="vm.addressPostCode" required/> 
+                <h5 class="form-label">address: city</h5>
+                <input type="text" class="form-control" placeholder="address: city" ng-model="vm.addressCity" required/> 
+                <h5 class="form-label">address: country</h5>
+                <input type="text" class="form-control" placeholder="address: country" ng-model="vm.addressCountry" required/> 
+              </div>
+            </div>    
+            <br/> 
+            <button class="btn btn-lg btn-primary btn-block sign-up-button" type="submit">Sign up</button>  
+            <br/> 
+          </form>
+          <button class="btn btn-lg btn-primary btn-block sign-up" ng-click="vm.toggleSignUp()">already have an account? Log in !</button> 
+      </div>
+
+
+
+
 
   <br/>
   <br/>

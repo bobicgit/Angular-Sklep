@@ -44,6 +44,11 @@
 	bottom: -10px;
 }
 
+a {
+	color: white;
+    text-decoration: none;
+}
+
 a:visited {
     color: white;
     text-decoration: none;
@@ -55,7 +60,7 @@ a:hover {
 }
 
 a:active {
-	
+	color: white;
 }
 
   
@@ -96,4 +101,15 @@ a:active {
 
 .glyphicon-home {
 	font-size: 3em;
+}
+
+.userName {
+	position: relative;
+	right:7%;
+	bottom:-25px;
+}
+
+.hello {
+	position: relative;
+	right: 110px;
 }

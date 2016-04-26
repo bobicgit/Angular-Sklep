@@ -2,11 +2,16 @@
 
 .wrapper {
   margin: auto;
+  max-width: 900px;
+}
+
+.wrapper-login {
+  margin: auto;
   max-width: 400px;
 }
 
 .form-signin {
-  max-width: 380px;
+  max-width: 900px;
   padding: 15px 35px 45px;
   margin: 0 auto;
   background-color: #fff;
@@ -46,4 +51,38 @@
   width: 307px;
   margin: auto;
   margin-top: 40px;
+}
+
+.signUp-form {
+  width: 700px;
+  height: 500px;
+  margin: auto;
+}
+
+.signUp-form-left {
+  padding: 8px;
+  float:left;
+  width: 50%;
+}
+.signUp-form-right {
+  padding: 8px;
+  width: 50%;
+  float: left;
+  height: 100%;
+}
+
+.form {
+  width: 600px;
+}
+
+.sign-up-button {
+  width: 307px;
+  margin: auto;
+}
+
+.form-label {
+  margin-top: 23px;
+  text-align: left;
+  margin-left: 8px;
+  font-size: 1em;
 }

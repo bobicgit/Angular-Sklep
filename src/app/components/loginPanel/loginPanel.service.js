@@ -11,8 +11,9 @@ angular
 
         var self = this;
         self.userData = {};
+       
 
-
+        
         self.updateUserData = updateUserData;
         self.logOut = logOut;
         self.sayHello = sayHello;
@@ -20,7 +21,6 @@ angular
 
         function updateUserData (userData) {
             self.userData.data = userData;
-            console.log(self.userData.data);
         }
 
         function logOut () {

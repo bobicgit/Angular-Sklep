@@ -9,7 +9,10 @@ angular
 
     function FirebaseFactory ($q, shoppingCartService) {
 
-        
+        var itemsRef = new Firebase('https://boiling-heat-8208.firebaseio.com/items');
+
+        var userRef = shoppingCartService.ref;
+
         var factory = {
             getProducts : getProducts,
             readCart: readCart,
@@ -19,19 +22,23 @@ angular
             makeAvailable: makeAvailable,
             removeOneFromCart: removeOneFromCart,
             getItem:getItem,
-            storeComment: storeComment
+            storeComment: storeComment,
+            mergeCarts: mergeCarts
         }
 
 
         return factory;
 
 
+
+
+
         function getProducts () {
 
             var items;
-            var ref = new Firebase('https://boiling-heat-8208.firebaseio.com/items');
+            
             var deferred = $q.defer();
-            ref.once("value", function(snapshot) {
+            itemsRef.once("value", function(snapshot) {
                 items = [];
                 snapshot.forEach(function(childSnapshot) {
                     var item = childSnapshot.val();
@@ -45,7 +52,7 @@ angular
 
         function readCart () {
             var cart;
-            var ref = new Firebase('https://boiling-heat-8208.firebaseio.com/users/Maniek/koszyk');
+            var ref = new Firebase(userRef.userRef);
             var deferred = $q.defer();
             ref.once("value", function(snapshot) {
                 cart = [];
@@ -78,7 +85,8 @@ angular
                 newItem.url = item.url;
                 newItem.category = item.category;
 
-                var ref = new Firebase('https://boiling-heat-8208.firebaseio.com/users/Maniek/koszyk/');
+                var ref = new Firebase(userRef.userRef);
+                console.log(userRef.userRef);
                 ref.once("value", function(snapshot) {
                     snapshot.forEach(function(childSnapshot) {
                         if (childSnapshot.val().id === newItem.id) { 
@@ -110,13 +118,12 @@ angular
         function reduceAvailable (item) {
 
             var dupa = $q.defer();
-            var ref = new Firebase('https://boiling-heat-8208.firebaseio.com/items');
-            ref.once("value", function(snapshot) {
+            itemsRef.once("value", function(snapshot) {
                 snapshot.forEach(function(childSnapshot) {
                     if (childSnapshot.val().id === item.id) { 
                         if (childSnapshot.val().available > 0 ) {
                             var newAvailable = childSnapshot.val().available - 1;
-                            ref.child(childSnapshot.key()).update({available: newAvailable});
+                            itemsRef.child(childSnapshot.key()).update({available: newAvailable});
                             dupa.resolve(item);
                         } else {
                         dupa.reject();
@@ -134,7 +141,7 @@ angular
 
             var amount;
 
-            var ref = new Firebase('https://boiling-heat-8208.firebaseio.com/users/Maniek/koszyk/');
+            var ref = new Firebase(userRef.userRef);
             ref.once("value", function(snapshot) {
                 snapshot.forEach(function(childSnapshot) {
                     if (childSnapshot.val().id === item.id) { 
@@ -149,7 +156,7 @@ angular
 
         function removeOneFromCart (item) {
 
-            var ref = new Firebase('https://boiling-heat-8208.firebaseio.com/users/Maniek/koszyk/');
+            var ref = new Firebase(userRef.userRef);
             ref.once("value", function(snapshot) {
                 snapshot.forEach(function(childSnapshot) {
                     if (childSnapshot.val().id === item.id) { 
@@ -166,12 +173,11 @@ angular
 
         function makeAvailable (item, amount) {
             
-            var ref = new Firebase('https://boiling-heat-8208.firebaseio.com/items');
-            ref.once("value", function(snapshot) {
+            itemsRef.once("value", function(snapshot) {
                 snapshot.forEach(function(childSnapshot) {
                     if (childSnapshot.val().id === item.id) { 
                         var newAvailable = childSnapshot.val().available + amount;
-                        ref.child(childSnapshot.key()).update({available: newAvailable});
+                        itemsRef.child(childSnapshot.key()).update({available: newAvailable});
                     }
                 });
             });
@@ -208,14 +214,48 @@ angular
 
 
         function storeComment (comment, author, date, itemId) {
-            var ref = new Firebase('https://boiling-heat-8208.firebaseio.com/items');
-            ref.once("value", function(snapshot) {
+
+            itemsRef.once("value", function(snapshot) {
                 snapshot.forEach(function(childSnapshot) {
                     if (childSnapshot.val().id === itemId) { 
-                        ref.child(childSnapshot.key()).child('comments').push({comment: comment, author: author, date: date});
+                        itemsRef.child(childSnapshot.key()).child('comments').push({comment: comment, author: author, date: date});
                     }
                 });
             });
+        }
+
+        function mergeCarts () {
+
+            if(localStorage.AnonymousFirebaseUid){
+                getProductsFromAnonymousUser()
+                .then(function (items) {
+                    console.log(items);
+
+                    var ref = new Firebase(userRef.userRef);
+                    items.forEach(function(item){
+                        ref.push(item);
+                    })
+            
+             });}
+
+
+
+
+            function getProductsFromAnonymousUser () {
+                var dupa = $q.defer();
+                var ref = new Firebase('https://boiling-heat-8208.firebaseio.com/usersUnlogged/' + localStorage.AnonymousFirebaseUid +'/cart');
+                    ref.once("value", function(snapshot) {
+                    var items = [];  
+                    snapshot.forEach(function(childSnapshot) {
+                        items.push(childSnapshot.val());
+                    });
+                    ref.remove();
+                    dupa.resolve(items);
+                });
+                return dupa.promise;
+            }
+
+
         }
 
         

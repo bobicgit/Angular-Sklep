@@ -6,25 +6,61 @@
     .factory('FirebaseAuthFactory', FirebaseAuthFactory);
 
     /** @ngInject */
-   // FirebaseAuthFactory.$inject = [];
+   //
 
-    function FirebaseAuthFactory($q) {
+    function FirebaseAuthFactory($q, loginPanelService, shoppingCartService, LocalStorageFactory, FirebaseFactory) {
 
         
 
-      
+        var ref = new Firebase('https://boiling-heat-8208.firebaseio.com/users');
+        ref.onAuth(checkStatus);
 
         var factory = {
             addUser: addUser,
             storeUserData: storeUserData,
             authUser: authUser,
             getUserData: getUserData,
-            checkStatus: checkStatus
+            initialize: initialize,
+            checkStatus:checkStatus,
+            logOut: logOut
+            //,logAnonymous: logAnonymous
         }
 
         return factory
 
 
+
+        function initialize () {
+            ref.onAuth(checkStatus);
+        }
+
+        function checkStatus (data) {
+            if (data) {
+                shoppingCartService.setRef(data.uid);
+                getUserData(data.uid)
+                .then(function (data) {
+                    loginPanelService.updateUserData(data);
+                });
+            } else {
+               LocalStorageFactory.checkForAnonymousUid();
+            }
+        }
+
+        function logOut () {
+            ref.unauth();
+            LocalStorageFactory.checkForAnonymousUid();
+        }
+
+        // function logAnonymous () {
+        //     var ref = new Firebase('https://boiling-heat-8208.firebaseio.com/');
+        //     ref.authAnonymously(function(error, authData) {
+        //       if (error) {
+        //         console.log("Login Failed!", error);
+        //       } else {
+        //         console.log("Authenticated successfully with payload:", authData);
+        //       }
+        // });
+        // }
 
         
 
@@ -32,7 +68,6 @@
 
         function addUser (email, password) {
             var dup = $q.defer();
-            var ref = new Firebase('https://boiling-heat-8208.firebaseio.com/users');
             ref.createUser({
               email    : email,
               password : password
@@ -48,7 +83,7 @@
         }
 
         function storeUserData (id, data) {
-            var ref = new Firebase('https://boiling-heat-8208.firebaseio.com/users');
+            
             ref.child(id).child('customerDetails').set(data);
             ref.child(id).child('cart').set('');
         }
@@ -58,7 +93,7 @@
             var dup = $q.defer();
             console.log(email);
             console.log(password);
-            var ref = new Firebase("https://boiling-heat-8208.firebaseio.com/users");
+            
             ref.authWithPassword({
               email    : email,
               password : password
@@ -66,6 +101,9 @@
               if (error) {
                 console.log("Login Failed!", error);
               } else {
+                shoppingCartService.setRef(authData.uid);
+                FirebaseFactory.mergeCarts();
+                console.log(authData.uid);
                 //console.log("Authenticated successfully with payload:", authData);
               }
                dup.resolve(authData);
@@ -75,7 +113,7 @@
 
         function getUserData (id) {
             var dup = $q.defer();
-            var ref = new Firebase("https://boiling-heat-8208.firebaseio.com/users");
+            
              ref.child(id).once("value", function(snapshot) {
                 var userData = snapshot.val();
                 dup.resolve(userData);

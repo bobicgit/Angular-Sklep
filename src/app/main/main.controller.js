@@ -6,18 +6,22 @@
     .controller('MainController', MainController);
 
   /** @ngInject */
-  function MainController() {
+  MainController.$inject = ['FirebaseAuthFactory'];
+
+  function MainController(FirebaseAuthFactory) {
     var vm = this;
 
-      
-            var ref = new Firebase('https://boiling-heat-8208.firebaseio.com/users');
-            ref.onAuth(checkStatus);
+     initialize();
+
+
+
+      function initialize () {
+         FirebaseAuthFactory.initialize();
+         
+      }       
             
 
-
-      function checkStatus (data) {
-        console.log(data);
-      }
+      
     
   }
 })();

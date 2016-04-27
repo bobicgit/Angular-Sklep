@@ -18,6 +18,14 @@ angular
         vm.removeOneItem = removeOneItem;
         vm.sum;
         vm.active = true;
+
+        vm.isLogged = shoppingCartService.status;
+        vm.goToBuy = vm.isLogged.logged ? "#/summary": "#/login";
+        
+    
+        
+
+        
         
 
         vm.cartItems = [];
@@ -26,6 +34,7 @@ angular
 
 
         //It download cart items from database and updates the total cost
+
 
         function readCart() {
             

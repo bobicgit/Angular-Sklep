@@ -23,7 +23,7 @@
     /** @ngInject */
     NavbarController.$inject = ['shoppingCartService', 'loginPanelService', 'FirebaseAuthFactory'];
 
-    function NavbarController($timeout, shoppingCartService, loginPanelService, FirebaseAuthFactory) {
+    function NavbarController($window, $location, $timeout, shoppingCartService, loginPanelService, FirebaseAuthFactory) {
 
       var vm = this;
       vm.logOut = logOut;
@@ -32,22 +32,21 @@
 
       vm.cart = shoppingCartService.cart;
       vm.userData = loginPanelService.userData;
-      vm.checkStatus = checkStatus;
-
-      checkStatus();
+     
 
 
       function logOut () {
+        $window.location.hash = '#/';
+        shoppingCartService.setRef();
         loginPanelService.logOut();
+        FirebaseAuthFactory.logOut();
         vm.bye = true;
         $timeout(function () {
           vm.bye = false;
         }, 2000);
       }
 
-      function checkStatus () {
-        FirebaseAuthFactory.checkStatus();
-      }
+      
 
     }
 

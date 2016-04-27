@@ -22,6 +22,11 @@
         controller: 'LoginPanelController',
         controllerAs: 'vm'
       })
+      .when('/summary', {
+        templateUrl: 'app/components/summaryPanel/summaryPanel.html',
+        controller: 'SummaryController',
+        controllerAs: 'vm'
+      })
       .when('/:id', {
         templateUrl: 'app/components/productDetails/productDetails.html',
         controller: 'ProductDetailsController',

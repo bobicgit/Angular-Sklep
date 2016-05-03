@@ -1,115 +1,88 @@
 .container-fluid {
-	
-	background-color: #2658AD;
-	height: 70px;
-	position: fixed;
-	z-index: 500;
+    background-color: #2658AD;
+    height: 70px;
+    position: fixed;
+    z-index: 500;
+    min-width: 500px;
+}
 
+@media (min-width: 1300px) {
+    .container-fluid {
+        width: 1140px;
+    }
+    .nav-left {
+    width: 15%;
+    }
+
+    .nav-right {
+    width: 24%;
+    }
+}
+
+@media (max-width: 1300px) {
+    .container-fluid {
+        width: 77%;
+        min-width: 480px;
+    }
+    .hello {
+        display: none;
+    }
+    .nav-left {
+        width:20%;
+    }
+    .nav-right{
+        width: 28%;
+    }
 }
 
 
-@media (min-width: 1200px) {
-	.container-fluid {
-	    width: 1140px;
-	}
+@media (max-width: 1000px) {
+    .nav-weak {
+        display: none;
+    }
 }
 
-@media (max-width: 992px) {
-	.container-fluid {
-	    width: 940px;
-	}
-}
-@media (max-width: 768px) {
-	.container-fluid {
-	    width: 910px;
-	}
+@media (max-width: 840px) {
+    .nav-left {
+        width:25%;
+    }
+    .name {
+        display: none;
+    }
 }
 
-.navbar-collapse {
-	width: 100%;
+.nav-div {
+    position: relative;
+    float: left;
+    height: 60px;
+    margin: 4px;
+    bottom:-10px;
 }
 
-
-
-
-.acme-navbar-text {
-  color: white;
+.nav-left {
+    float: left;
+    text-align: left;
 }
 
-.go-to-cart {
-	position: relative;
-	height: 100%;
-	font-size: 2em;
-	text-decoration: none;
-	bottom: -10px;
+.nav-right {
+    float: right;
+    text-align: right;
 }
 
-a {
-	color: white;
-    text-decoration: none;
-}
-
-a:visited {
+.nav-div {
+    font-size: 2.5em;
+    font-weight: bold;
     color: white;
-    text-decoration: none;
 }
 
-a:hover {
-    color: white;
-    text-decoration: none;
+.nav-div:hover span {
+    color: #EDEDED;
 }
 
-a:active {
-	color: white;
+.glyph {
+    font-size: 35px;
 }
 
-  
-.navbar-rigth {
-	position: relative;
-	float:right;
-}
-
-.navbar-header {
-	position: relative;
-	width: 100%;
-	padding:0px;
-}
-
-
-
-.navbar-left {
-	height: 65px;
-	display: inline-block;
-	margin-left: 30px;
-}
-
-.navbar-right {
-	float:right;
-	margin-right: 10px;
-}
-
-.login {
-	bottom:-22px;
-}
-.cart {
-	bottom :1px;
-}
-
-.home {
-	top: 10px;
-}
-
-.glyphicon-home {
-	font-size: 3em;
-}
-
-.userName {
-	position: relative;
-	right:7%;
-	bottom:-25px;
-}
-
-.hello {
-	position: relative;
-	right: 110px;
+.name {
+    cursor: default;
 }

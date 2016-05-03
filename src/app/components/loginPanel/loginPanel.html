@@ -1,82 +1,77 @@
 <div class="container">
-
     <div>
         <acme-navbar creation-date="main.creationDate"></acme-navbar>
     </div>
+    <div class="jumbotron text-center background">
+       <logo></logo>
 
-    <div class="jumbotron text-center">
-        <h1>'Zaloguj!'</h1>
-        <p class="lead">
-            <img src="assets/images/yeoman.png" alt="I'm Yeoman"><br>
-            Always a pleasure scaffolding your apps.
-        </p>
+        <div class="wrapper-login" ng-if="!vm.signUp">
+            <form name="myForm1" class="form-signin" ng-submit="myForm1.$valid && vm.authUser(vm.loginEmail, vm.loginPassword)">       
+                <h2 class="form-signin-heading">Please sign in</h2>
+                <br/>
+                <input type="text" class="form-control" name="username" placeholder="Login" ng-model="vm.loginEmail" required autofocus />
+                <br/>
+                <input type="password" class="form-control" name="password" placeholder="Password" ng-model="vm.loginPassword" required=""/>    
+                <br/> 
+                <button class="btn btn-lg btn-primary btn-block" type="submit">Login</button> 
+                <br/> 
+                <h5 class="wrong-email" ng-if="vm.wrongEmail">Wrong email or password<h5>
+            </form>
+            <button class="btn btn-lg btn-primary btn-block sign-up" ng-click="vm.toggleSignUp()">don't have account yet? Sign up !</button> 
+        </div>
+
+
+        <div class="wrapper" ng-if="vm.signUp">
+            <form name="myForm2" class="form-signin" ng-submit="myForm2.$valid && vm.addUser(vm.email, vm.password)">       
+                <h2 class="form-signin-heading">Create new Account</h2>
+                <br/>
+                <div class="row">
+                    <div class="col-md-6">
+                        <h5 class="form-label" ><span class="dot">.</span><span ng-show="myForm2.firstName.$invalid&&myForm2.firstName.$dirty">name should consists of 2 - 15 characters</span></h5>
+                        <input type="text" class="form-control" name="firstName"  ng-model-options="vm.modelOption" ng-minlength="2" ng-maxlength="15" placeholder="first name" ng-model="vm.firstName" required autofocus />
+
+                        <h5 class="form-label" ><span class="dot">.</span><span ng-show="myForm2.surname.$invalid&&myForm2.surname.$dirty">surname should consists of 2 - 15 characters</span></h5>
+                        <input type="text" class="form-control" name="surname"  ng-model-options="vm.modelOption" ng-minlength="2" ng-maxlength="15" placeholder="surname" ng-model="vm.surname" required/>  
+
+                        <h5 class="form-label" ><span class="dot">.</span><span ng-show="myForm2.email.$invalid&&myForm2.email.$dirty">wrong email pattern</span></h5>
+                        <input type="text" class="form-control" name="email"  ng-model-options="vm.modelOption" ng-pattern="vm.emailPattern" ng-minlength="5" ng-maxlength="50" placeholder="email adrress" ng-model="vm.email" required/>
+
+                        <h5 class="form-label" ><span class="dot">.</span><span ng-show="myForm2.password1.$invalid&&myForm2.password1.$dirty">password should consists of 5 - 15 characters</span></h5>
+                        <input type="password" class="form-control" name="password1"  ng-model-options="vm.modelOption" ng-minlength="5" ng-maxlength="15" placeholder="password" ng-model="vm.password" required/>
+
+                        <h5 class="form-label" ><span class="dot">.</span>
+                        <span ng-show="vm.password!==vm.password2&&myForm2.password2.$dirty">password should match the above one</span></h5>
+                        <input type="password" class="form-control" name="password2"  ng-model-options="vm.modelOption" ng-minlength="5" ng-maxlength="15" placeholder="Repeat your password" ng-model="vm.password2"required/> 
+                    </div>
+
+                    <div class="col-md-6">
+                        <h5 class="form-label" ><span class="dot">.</span><span ng-show="myForm2.phoneNumber.$invalid&&myForm2.phoneNumber.$dirty">phone number should consists of 5 - 15 numbers</span></h5>
+                        <input type="text" class="form-control" name="phoneNumber"  ng-model-options="vm.modelOption" ng-pattern="vm.numberPattern" ng-minlength="5" ng-maxlength="15" placeholder="phone number" ng-model="vm.phoneNumber" required autofocus />
+
+                        <h5 class="form-label"><h5 class="form-label" ><span class="dot">.</span><span ng-show="myForm2.addressStreet.$invalid&&myForm2.addressStreet.$dirty">address should consists of 5 - 25 characters </span></h5></h5>
+                        <input type="text" class="form-control" name="addressStreet"  ng-model-options="vm.modelOption" ng-minlength="5" ng-maxlength="25" placeholder="address: street, home number" ng-model="vm.addressStreet" required/>    
+
+                        <h5 class="form-label" ><span class="dot">.</span><span ng-show="myForm2.addressPostCode.$invalid&&myForm2.addressPostCode.$dirty">postcode should consist of 3 - 10 numbers</span></h5>
+                        <input type="text" class="form-control" name="addressPostCode"  ng-pattern="vm.numberPattern" ng-model-options="vm.modelOption" ng-minlength="3" ng-maxlength="10" placeholder="address: post code" ng-model="vm.addressPostCode" required/> 
+
+                        <h5 class="form-label" ><span class="dot">.</span><span ng-show="myForm2.addressCity.$invalid&&myForm2.addressCity.$dirty">city should consist of 3 - 10 characters</span></h5>
+                        <input type="text" class="form-control" name="addressCity"  ng-model-options="vm.modelOption" ng-minlength="3" ng-maxlength="15" placeholder="address: city" ng-model="vm.addressCity" required/> 
+
+                        <h5 class="form-label" ><span class="dot">.</span><span ng-show="myForm2.addressCountry.$invalid&&myForm2.addressCountry.$dirty">country should consist of 3 - 15 characters</span></h5>
+                        <input type="text" ng-model="vm.addressCountry" name="addressCountry" ng-minlength="3" ng-maxlength="15" ng-model-options="vm.modelOption" uib-typeahead="country for country in countries | filter:$viewValue | limitTo:8" class="form-control" placeholder="address: country" ng-controller="TypeaheadController" required/>
+                    </div>
+                </div>  
+                <h5 class="wrong-email" ng-if="vm.wrongEmail">this email is already taken<h5>  
+                <br/> 
+                <button class="btn btn-lg btn-primary btn-block sign-up-button" type="submit">Sign up</button>  
+                <br/> 
+            </form>
+            <button class="btn btn-lg btn-primary btn-block sign-up" ng-click="vm.toggleSignUp()">already have an account? Log in !</button> 
+        </div>
+
         <br/>
-            
+        <br/>
+        <a href="#/"><button class="btn btn-success btn-lg buy"><b>  back to shop </b></button></a>
 
-
-
-
-
-          
-      <div class="wrapper-login" ng-if="!vm.signUp">
-          <form name="myForm1" class="form-signin" ng-submit="myForm1.$valid && vm.authUser(vm.loginEmail, vm.loginPassword)">       
-          <h2 class="form-signin-heading">Please login</h2>
-          <br/>
-          <input type="text" class="form-control" name="username" placeholder="Login" ng-model="vm.loginEmail" required autofocus />
-          <br/>
-          <input type="password" class="form-control" name="password" placeholder="Password" ng-model="vm.loginPassword" required=""/>     
-          <br/> 
-          <button class="btn btn-lg btn-primary btn-block" type="submit">Login</button>  
-          <br/> 
-          </form>
-          <button class="btn btn-lg btn-primary btn-block sign-up" ng-click="vm.toggleSignUp()">don't have account yet? Sign up !</button> 
-      </div>
-
-
-      <div class="wrapper" ng-if="vm.signUp">
-          <form name="myForm2" class="form-signin" ng-submit="myForm2.$valid && vm.addUser(vm.email, vm.password)">       
-            <h2 class="form-signin-heading">Create new Account</h2>
-            <br/>
-            <div class="signUp-form">
-              <div class="signUp-form-left">
-                <h5 class="form-label">first name</h5>
-                <input type="text" class="form-control" placeholder="first name" ng-model="vm.firstName" required autofocus />
-                <h5 class="form-label">surname</h5>
-                <input type="text" class="form-control" placeholder="surname" ng-model="vm.surname" required/>  
-                <h5 class="form-label">email adrress</h5>
-                <input type="text" class="form-control" placeholder="email adrress" ng-model="vm.email" required/>   
-                <h5 class="form-label">password</h5>
-                <input type="password" class="form-control" placeholder="password" ng-model="vm.password" required/>
-                <h5 class="form-label">repeated password</h5>
-                <input type="password" class="form-control" placeholder="Repeat your password" required/> 
-              </div>
-              <div class="signUp-form-right">
-                <h5 class="form-label">phone number</h5>
-                <input type="text" class="form-control" placeholder="phone number" ng-model="vm.phoneNumber" required autofocus />
-                <h5 class="form-label">address: street, home number</h5>
-                <input type="text" class="form-control" placeholder="address: street, home number" ng-model="vm.addressStreet" required/>    
-                <h5 class="form-label">address: post code</h5>
-                <input type="text" class="form-control" placeholder="address: post code" ng-model="vm.addressPostCode" required/> 
-                <h5 class="form-label">address: city</h5>
-                <input type="text" class="form-control" placeholder="address: city" ng-model="vm.addressCity" required/> 
-                <h5 class="form-label">address: country</h5>
-                <input type="text" class="form-control" placeholder="address: country" ng-model="vm.addressCountry" required/> 
-              </div>
-            </div>    
-            <br/> 
-            <button class="btn btn-lg btn-primary btn-block sign-up-button" type="submit">Sign up</button>  
-            <br/> 
-          </form>
-          <button class="btn btn-lg btn-primary btn-block sign-up" ng-click="vm.toggleSignUp()">already have an account? Log in !</button> 
-      </div>
-
-
-
-
-
-  <br/>
-  <br/>
-    
-        <button class="btn btn-success btn-lg buy"><a href="#/"><b>  back to shop </b></a></button>
     </div>
 </div>

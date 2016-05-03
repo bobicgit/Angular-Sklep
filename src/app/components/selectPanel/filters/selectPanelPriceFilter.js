@@ -2,7 +2,7 @@
   'use strict';
 
 angular
-    .module('yoman')
+    .module('ng-shop')
     .filter('priceFilter', priceFilter);
 
 

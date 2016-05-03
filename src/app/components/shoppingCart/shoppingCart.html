@@ -1,47 +1,73 @@
 <div class="container">
-
     <div>
         <acme-navbar creation-date="main.creationDate"></acme-navbar>
     </div>
 
     <div class="jumbotron text-center">
-        <h1>'Koszyk!'</h1>
-        <p class="lead">
-            <img src="assets/images/yeoman.png" alt="I'm Yeoman"><br>
-            Always a pleasure scaffolding your apps.
-        </p>
-        <p class="animated infinite" ng-class="main.classAnimation"></p>
-        <div class="item-in-cart" ng-repeat="item in vm.cartItems">
-            <div class="cart-image-div">    <a href="#/{{item.id}}"><img src="{{item.url}}"/></div></a>
-            <div class="cart-amount-div">
-                <span>{{item.amount}} pc.</span>
-                <div ng-click="vm.add(item)" class="add-one-item">
-                    <span class="glyphicon glyphicon-triangle-top"></span>
-                </div>
-                <div  ng-click="vm.removeOneItem(item)" class="remove-one-item">
-                    <span class="glyphicon glyphicon-triangle-bottom"></span>
+        <logo></logo>
+        <h1 ng-if="vm.cartItems.length>0">Cart</h1>
+        <h2 ng-if="vm.cartItems.length>0">Your products</h2>
+        <br/>
+
+        <div class="shop-container" >
+        <div class="row" ng-repeat="item in vm.cartItems">
+            <div class="col-md-4 col-xs-6 cart-item">
+                <div class="item-div">
+                    <div class="cart-image-div">
+                    <a href="#/{{item.id}}"><img class="cart-image" src="{{item.url}}"/></a>
+                    </div>
                 </div>
             </div>
-            <div class="cart-sum-div">
-                <span>{{item.price * item.amount | currency}}</span>
-                <span style="font-size: 1.3em;" ng-if="item.amount > 1"  > {{item.price | currency}}/pc</span>
+            <div class="col-md-2 col-xs-6 cart-item">
+                <div class="item-div">
+                    <span class="cart-span">{{item.amount}}pc.</span>
+                    <div ng-click="vm.add(item)" class="cart-add-one-item">
+                        <span class="glyphicon glyphicon-triangle-top"></span>
+                    </div>
+                    <div  ng-click="vm.removeOneItem(item)" class="cart-remove-one-item">
+                        <span class="glyphicon glyphicon-triangle-bottom"></span>
+                    </div>
+                </div>
             </div>
-            <div class="cart-remove" ng-click="vm.removeItem(item)">
-                <span class="glyphicon glyphicon-remove"></span>
+            <div class="col-md-3  col-xs-6 cart-item">
+                <div class="item-div">
+                    <span class="cart-span">{{item.price * item.amount | currency}}</span>
+                    <div class="price-per-piece" ng-if="item.amount > 1"><span>{{item.price | currency}}</span></div>
+                </div>
+            </div>
+            <div class="col-md-3 col-xs-6 cart-item">
+                <div class="item-div">
+                    <div class="cart-rem" ng-click="vm.removeItem(item)">
+                    <span class="glyphicon glyphicon-remove"></span>
+                    </div>
+                </div>
             </div>
         </div>
-        <div ng-if="vm.cartItems.length>0">
-            <div class="cart-bar"></div>
-            <div  class="item-in-cart">
-                <div class="cart-image-div2"><span class="sum-up">to sum up...</span></div>
-                <div class="cart-amount-div"><span></span></div>
-                <div class="cart-sum-div"><span><b>{{vm.sum | currency}}</b></span></div>
-                <div class="cart-remove"><a href="{{vm.goToBuy}}"><button class="btn btn-success btn-lg buy"><b>  buy!  </b></button></a>
-                </div>
-            </div>  
         </div>
-        <div ng-if="vm.cartItems<1" class="item-in-cart">
-            <h2>Your cart is empty....... </h2>
+
+
+
+
+          <div class="shop-container" ng-if="vm.cartItems.length>0">
+           <div class="cart-bar"></div>
+            <div class="row">
+            
+            <div class="col-sm-6  col-xs-12 cart-item">
+                <div class="item-div">
+                <span class="cart-span">total cost</span></div>
+            </div>
+            <div class="col-sm-3  col-xs-6 cart-item">
+                <div class="item-div"><span class="cart-span"><b>{{vm.sum | currency}}</b></span></div>
+            </div>
+            <div class="col-sm-3 col-xs-6 cart-item">
+                <div class="item-div"><a href="{{vm.goToBuy}}"><button class="btn btn-success btn-lg cart-buy" ng-click="vm.changeStatus()"><b>  buy!  </b></button></a></div>
+            </div>
+            </div>
+        </div>
+
+        
+        <div ng-if="vm.cartItems<1" class="cart-item">
+            <h2 class="empty-cart">Your cart is empty....... </h2>
             <br/>
         </div>
         <br/>

@@ -1,8 +1,8 @@
 (function () {
-    
+    'use strict';
 
 angular
-    .module("yoman")
+    .module("ng-shop")
     .factory("FirebaseFactory", FirebaseFactory);
 
 
@@ -31,50 +31,48 @@ angular
 
 
 
-
-
         function getProducts () {
 
             var items;
             
-            var deferred = $q.defer();
+            var a = $q.defer();
             itemsRef.once("value", function(snapshot) {
                 items = [];
                 snapshot.forEach(function(childSnapshot) {
                     var item = childSnapshot.val();
                     items.push(item);
                 });
-                deferred.resolve(items);
+                a.resolve(items);
             });
-            return deferred.promise;
+            return a.promise;
         }
 
 
         function readCart () {
             var cart;
             var ref = new Firebase(userRef.userRef);
-            var deferred = $q.defer();
+            var a = $q.defer();
             ref.once("value", function(snapshot) {
                 cart = [];
                 snapshot.forEach(function(childSnapshot) {
                     var item = childSnapshot.val();
                     cart.push(item);
                 });
-                deferred.resolve(cart);
+                a.resolve(cart);
             });
-            return deferred.promise;
+            return a.promise;
         }
 
 
         function addToCart (item) {
 
-            var dup = $q.defer();
+            var a = $q.defer();
             var added = false;
 
             reduceAvailable(item)
             .then(function (item) {
 
-                dup.resolve(item);
+                a.resolve(item);
 
                 var newItem = {};
                 newItem.id = item.id;
@@ -86,7 +84,6 @@ angular
                 newItem.category = item.category;
 
                 var ref = new Firebase(userRef.userRef);
-                console.log(userRef.userRef);
                 ref.once("value", function(snapshot) {
                     snapshot.forEach(function(childSnapshot) {
                         if (childSnapshot.val().id === newItem.id) { 
@@ -107,9 +104,9 @@ angular
                     }
                 }    
                 
-            }, function () {dup.reject();});
+            }, function () {a.reject();});
 
-          return dup.promise;  
+          return a.promise;  
         }
 
 
@@ -117,21 +114,17 @@ angular
 
         function reduceAvailable (item) {
 
-            var dupa = $q.defer();
-            itemsRef.once("value", function(snapshot) {
-                snapshot.forEach(function(childSnapshot) {
-                    if (childSnapshot.val().id === item.id) { 
-                        if (childSnapshot.val().available > 0 ) {
-                            var newAvailable = childSnapshot.val().available - 1;
-                            itemsRef.child(childSnapshot.key()).update({available: newAvailable});
-                            dupa.resolve(item);
-                        } else {
-                        dupa.reject();
-                        }
-                    }
-                });
+            var a = $q.defer();
+            itemsRef.child(item.id).once("value", function(snapshot) {
+                if (snapshot.val().available > 0 ) {
+                    var newAmount = snapshot.val().available - 1;
+                    itemsRef.child(snapshot.key()).update({available: newAmount});
+                    a.resolve(item);
+                } else {
+                a.reject();
+                }
             });
-            return dupa.promise;
+            return a.promise;
         }
 
 
@@ -172,6 +165,9 @@ angular
         // it gives back the amount of product removed from te cart
 
         function makeAvailable (item, amount) {
+
+          //  console.log(item);
+          //  console.log(amount);
             
             itemsRef.once("value", function(snapshot) {
                 snapshot.forEach(function(childSnapshot) {
@@ -189,8 +185,8 @@ angular
 
         function getItem (id) {
 
-            var dupa = $q.defer();
-            var ref = new Firebase('https://boiling-heat-8208.firebaseio.com/items/' + id );
+            var a = $q.defer();
+            var ref = new Firebase('https://boiling-heat-8208.firebaseio.com/items/' + id);
             ref.once("value", function(snapshot) {
                 var item = [];
                 var data = {};
@@ -207,42 +203,51 @@ angular
                  });
                 item.push(data);
                 item.push(comments);
-                dupa.resolve(item);
+                a.resolve(item);
             });
-            return dupa.promise;
+            return a.promise;
         }
 
 
-        function storeComment (comment, author, date, itemId) {
+        function storeComment (id, comment, author, date) {
 
-            itemsRef.once("value", function(snapshot) {
-                snapshot.forEach(function(childSnapshot) {
-                    if (childSnapshot.val().id === itemId) { 
-                        itemsRef.child(childSnapshot.key()).child('comments').push({comment: comment, author: author, date: date});
-                    }
-                });
-            });
+            var ref = new Firebase('https://boiling-heat-8208.firebaseio.com/items/' + id);
+            ref.child('comments').push({comment: comment, author: author, date: date});
         }
+
+
+
+        // used when the unlogged user had put something into cart
+        // then the product that are already on his account are removed 
+        // when the cart of unlogged user is empty, 
+        // products on his account stay 
+
 
         function mergeCarts () {
 
-            if(localStorage.AnonymousFirebaseUid){
+
+
+            if (localStorage.AnonymousFirebaseUid) {
                 getProductsFromAnonymousUser()
                 .then(function (items) {
-                    console.log(items);
+                    if (items.length > 0) {
+                        emptyCart()
+                        .then(function () {
+                            var ref = new Firebase(userRef.userRef);
+                            items.forEach(function(item){
+                                ref.push(item);
+                            });
+                            shoppingCartService.updateAmount(items.length);
+                            
+                        }); 
+                        
+                    }
 
-                    var ref = new Firebase(userRef.userRef);
-                    items.forEach(function(item){
-                        ref.push(item);
-                    })
-            
-             });}
-
-
-
+                });
+            }
 
             function getProductsFromAnonymousUser () {
-                var dupa = $q.defer();
+                var a = $q.defer();
                 var ref = new Firebase('https://boiling-heat-8208.firebaseio.com/usersUnlogged/' + localStorage.AnonymousFirebaseUid +'/cart');
                     ref.once("value", function(snapshot) {
                     var items = [];  
@@ -250,28 +255,26 @@ angular
                         items.push(childSnapshot.val());
                     });
                     ref.remove();
-                    dupa.resolve(items);
+                    a.resolve(items);
                 });
-                return dupa.promise;
+                return a.promise;
             }
-
 
         }
 
-        
+        function emptyCart () {
+            var a = $q.defer();
+            var ref = new Firebase(userRef.userRef);
+            ref.once("value", function(snapshot) {
+                snapshot.forEach(function(childSnapshot) {
+                    removeFromCart(childSnapshot.val());
+                });
+                a.resolve();
+            });
+            return a.promise;
+        }    
 
-    }    
+    }
 
 
 })();
-
-
-// ref.once("value", function(snapshot) {
-//     snapshot.forEach(function(childSnapshot) { 
-//          childSnapshot.forEach(function(cchildSnapshot) {
-//             if (cchildSnapshot.key() ==='id') { 
-//                        ref.child(childSnapshot.key()).update({id:childSnapshot.key()}) ;
-//                     }
-//                  });
-//             });
-//         });

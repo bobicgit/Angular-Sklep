@@ -2,37 +2,44 @@
   'use strict';
 
 angular
-    .module('yoman')
+    .module('ng-shop')
     .controller('ShoppingCartController', ShoppingCartController);
 
 
-    ShoppingCartController.$inject = ['FirebaseFactory', 'shoppingCartService'];
+    ShoppingCartController.$inject = ['shoppingCartService', 'FirebaseFactory', 'FirebaseAuthFactory'];
 
-    function ShoppingCartController(FirebaseFactory, shoppingCartService) {
+    function ShoppingCartController (shoppingCartService, FirebaseFactory, FirebaseAuthFactory) {
 
 
 
         var vm = this;
-        vm.removeItem = removeItem;
-        vm.add = add;
-        vm.removeOneItem = removeOneItem;
+        vm.cartItems = [];
         vm.sum;
         vm.active = true;
 
+        vm.add = add;
+        vm.removeItem = removeItem;
+        vm.removeOneItem = removeOneItem;
+        vm.changeStatus = changeStatus;
+        
+
         vm.isLogged = shoppingCartService.status;
         vm.goToBuy = vm.isLogged.logged ? "#/summary": "#/login";
+
+        
         
     
+        initialize();
+
+
+
+        function initialize () {
+            readCart();
+            FirebaseAuthFactory.initialize(); 
+        }     
         
 
         
-        
-
-        vm.cartItems = [];
-
-        readCart();
-
-
         //It download cart items from database and updates the total cost
 
 
@@ -58,10 +65,9 @@ angular
                     vm.cartItems.splice(i, 1);
                     updateSum();
                     shoppingCartService.updateAmount(vm.cartItems);
-                     return;
+                    return;
                 }
             }
-    
         }
 
 
@@ -73,6 +79,7 @@ angular
             });
             vm.sum = sum;
         }
+
 
 
         // adding product to the cart
@@ -115,9 +122,10 @@ angular
             } 
         }
 
-    
+        function changeStatus() {
+            shoppingCartService.goToSummary(true);
+        }
 
-   
   }
 
 

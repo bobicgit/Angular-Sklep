@@ -2,7 +2,7 @@
     
 
 angular
-    .module("yoman")
+    .module("ng-shop")
     .service("shoppingCartService", shoppingCartService);
 
 
@@ -23,33 +23,48 @@ angular
             logged : false
         }
 
+        self.goToSummaryStatus = {
+            status : false
+        }
+
 
     
         self.updateAmount = updateAmount;
         self.addOne = addOne;
         self.setRef = setRef;
+        self.goToSummary = goToSummary;
+
 
 
         function setRef(ref) {
             if (angular.isString(ref)) {
             self.ref.userRef = 'https://boiling-heat-8208.firebaseio.com/users/' + ref + '/cart';
             self.status.logged = true;
-            console.log(self.ref.userRef);
             } else {
             self.ref.userRef = 'https://boiling-heat-8208.firebaseio.com/usersUnlogged/' + ref +'/cart'; 
-            self.status.logged = false;  
-            console.log(self.ref.userRef); 
+            self.status.logged = false;   
             }
         }
 
+
         function updateAmount (items) {
-            self.cart.itemsAmount = items.length;
+            if (angular.isNumber(items)) {
+                self.cart.itemsAmount = items;
+            } else {
+                self.cart.itemsAmount = items.length;
+            }
         }
+
 
         function addOne () {
             self.cart.itemsAmount ++;
         }
+        
 
+        function goToSummary (status) {
+            self.goToSummaryStatus.status = status;
+        }
+      
 
     }    
 

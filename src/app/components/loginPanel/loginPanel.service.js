@@ -2,7 +2,7 @@
     
 
 angular
-    .module("yoman")
+    .module("ng-shop")
     .service("loginPanelService", loginPanelService);
 
 
@@ -11,12 +11,11 @@ angular
 
         var self = this;
         self.userData = {};
-       
-
         
         self.updateUserData = updateUserData;
         self.logOut = logOut;
         self.sayHello = sayHello;
+
 
 
         function updateUserData (userData) {

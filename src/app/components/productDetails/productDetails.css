@@ -1,43 +1,46 @@
+h1, p{
+    cursor: default;
+}
+
 .big-photo {
-	width: 90%;
-	height: 500px;
-	background-color: white;
-	margin: auto;
+    width: 90%;
+    height: 500px;
+    background-color: white;
+    margin: auto;
 }
 
 .big-photo img {
-	width:100%;
-	height:100%;
-	overflow: hidden;
+    width:100%;
+    height:100%;
+    overflow: hidden;
 }
 
 .details-buy {
-	margin: auto;
-	margin-top:50px;
-	width: 35%;
-	height: 100px;
-	background-color: #5CA8FF;
-	min-width: 300px;
+    margin: auto;
+    margin-top:50px;
+    width: 35%;
+    height: 100px;
+    background-color: #5CA8FF;
+    min-width: 300px;
+    border-radius: 12px;
 }
 
-
-
 .add {
-	color: white;
-	font-size: 2em;
-	bottom:25px;
-	right: 20px;
+    color: white;
+    font-size: 2em;
+    bottom:25px;
+    right: 20px;
 }
 
 .availab {
-	color: white;
-	font-size: 1.5em;
-	bottom:30px;
-	right: 20px;
+    color: white;
+    font-size: 1.5em;
+    bottom:30px;
+    right: 20px;
 }
 
 a:active {
-	color:lightgray;
+    color:lightgray;
 }
 
 a:visited {
@@ -50,69 +53,72 @@ a:hover {
 }
 
 a b{
-	text-decoration: none;
+    text-decoration: none;
 }
 
 .ipsum {
-	margin: 20px 5%}
+    margin: 20px;
+}
 
 .buy, .add-comment {
-	margin-left: 20px;
-	margin-right: 20px;
-	position: relative;
-	bottom: 10px;
+    margin-left: 20px;
+    margin-right: 20px;
+    position: relative;
+    bottom: 10px;
 }
 
 .commentInput {
-	font-size: 1em;
-	width: 100%;
-	font-size: 2em;
-	resize: none;
+    font-size: 1em;
+    width: 100%;
+    font-size: 2em;
+    resize: none;
 }
 
 .comment {
-	width: 100%;
-	border: 1px solid white;
-	margin: 10px;
-	min-width: 400px;
-	overflow: hidden;
+    width: 100%;
+    border: 1px solid white;
+    margin: 10px;
+    min-width: 400px;
+    overflow: hidden;
 }
 
 .comment p {
-	max-width: 90%;
-	margin:auto;
-	overflow: hidden;
+    max-width: 90%;
+    margin:auto;
+    overflow: hidden;
+    cursor: default;
 }
 
 .comment-right {
-	text-align: right;
+    text-align: right;
 }
 .date {
-	font-size: 0.8em;
+    font-size: 0.8em;
 }
 
 .added-to-cart-details {
 
-	margin: auto;
-	margin-top:50px;
-	width: 35%;
-	height: 100px;
-	background-color: #1CE874;
-	min-width: 300px;
+    margin: auto;
+    margin-top:50px;
+    width: 35%;
+    height: 100px;
+    background-color: #1CE874;
+    min-width: 300px;
+    border-radius: 12px;
 }
 
 .added-details {
-	position: relative;
-	color: white;
-	font-size: 4em;
-	bottom:-10px;
-	right: 18px;
+    position: relative;
+    color: white;
+    font-size: 4em;
+    bottom:-10px;
+    right: 18px;
 }
 
 .added-to-cart-details .glyphicon {
-	font-size: 4.5em;
+    font-size: 4.5em;
 }
 
 .no-available {
-	background-color: lightgray;
+    background-color: lightgray;
 }

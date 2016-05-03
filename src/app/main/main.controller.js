@@ -1,27 +1,25 @@
 (function() {
-  'use strict';
+    'use strict';
 
-  angular
-    .module('yoman')
+angular
+    .module('ng-shop')
     .controller('MainController', MainController);
 
-  /** @ngInject */
-  MainController.$inject = ['FirebaseAuthFactory'];
 
-  function MainController(FirebaseAuthFactory) {
-    var vm = this;
+    MainController.$inject = ['FirebaseAuthFactory'];
 
-     initialize();
+    function MainController(FirebaseAuthFactory) {
 
 
+        initialize();
 
-      function initialize () {
-         FirebaseAuthFactory.initialize();
-         
-      }       
+
+        function initialize () {
+            FirebaseAuthFactory.initialize(); 
+        }       
             
 
-      
-    
-  }
+    }
+
+
 })();

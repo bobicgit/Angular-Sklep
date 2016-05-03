@@ -1,85 +1,93 @@
 (function() {
-  'use strict';
+    'use strict';
 
 angular
-    .module('yoman')
+    .module('ng-shop')
     .controller('LoginPanelController', LoginPanelController);
 
-  /** @ngInject */
+    /** @ngInject */
 
-    LoginPanelController.$inject = ['$window', '$location' ,'FirebaseAuthFactory', 'loginPanelService'];
+    LoginPanelController.$inject = ['$window', '$location' ,'FirebaseAuthFactory', 'loginPanelService', 'shoppingCartService'];
 
-    function LoginPanelController ($window, $location, FirebaseAuthFactory, loginPanelService) {
+    function LoginPanelController ($window, $location, FirebaseAuthFactory, loginPanelService, shoppingCartService) {
 
-      var vm = this;
+        var vm = this;
 
-      vm.signUp = false;
+        vm.userData = {};
+        vm.email = '';
+        vm.firstName = '';
+        vm.surname = '';
+        vm.phoneNumber = '';
+        vm.addressStreet = '';
+        vm.addressPostCode = '';
+        vm.addressCity = '';
+        vm.addressCountry = '';
 
-      vm.email;
-      vm.password;
-      vm.firstName;
-      vm.surname;
-      vm.phoneNumber;
-      vm.addressStreet;
-      vm.addressPostCode;
-      vm.addressCity;
-      vm.addressCountry;
+        vm.signUp = false;
+        vm.wrongEmail = false;
 
-      vm.userData = {};
+        vm.numberPattern = '\\d+';
+        vm.emailPattern = /^[a-z]+[a-z0-9._]+@[a-z]+\.[a-z.]{2,5}$/;
+        vm.modelOption = { updateOn: 'default blur', debounce: { 'default': 500, 'blur': 0 } };
 
+        vm.addUser = addUser;
+        vm.authUser = authUser;
+        vm.toggleSignUp = toggleSignUp;
+        
 
-     
+        initialize();
 
-
-      vm.authData;
-      vm.addUser = addUser;
-      vm.authUser = authUser;
-      vm.toggleSignUp = toggleSignUp;
-
-
-      function toggleSignUp () {
-        vm.signUp = (!vm.signUp);
-      }
-
-
-    	function addUser(email, password){
-        FirebaseAuthFactory.addUser(email, password)
-        .then(function(accountData){
-          vm.userData.email = vm.email;
-          vm.userData.password = vm.password;
-          vm.userData.firstName = vm.firstName;
-          vm.userData.surname = vm.surname;
-          vm.userData.phoneNumber = vm.phoneNumber;
-          vm.userData.addressStreet = vm.addressStreet;
-          vm.userData.addressCity = vm.addressCity;
-          vm.userData.addressCountry = vm.addressCountry;
-          vm.userData.id = accountData.uid;
-          console.log(vm.userData);
-            FirebaseAuthFactory.storeUserData(accountData.uid, vm.userData);
-           // getUserData(authData.uid);
-            console.log("Authenticated successfully with payload:", accountData.uid);
-
-        }, function(error) {
-            console.log("Login failed:", error);
-        })
-       }
+        function initialize () {
+            FirebaseAuthFactory.initialize(); 
+        }   
 
 
-       function authUser(email, password) {
-          FirebaseAuthFactory.authUser(email, password)
-          .then(function (authData) {
-            FirebaseAuthFactory.getUserData(authData.uid)
-            .then(function (userData) {
-              vm.userData = userData;
-              loginPanelService.updateUserData(vm.userData);
-              loginPanelService.sayHello();
-              $window.location.hash = '#/';
+        function addUser(email, password){
+            FirebaseAuthFactory.addUser(email, password)
+            .then(function(accountData){
+                vm.userData.email = vm.email;
+                vm.userData.firstName = vm.firstName;
+                vm.userData.surname = vm.surname;
+                vm.userData.phoneNumber = vm.phoneNumber;
+                vm.userData.addressStreet = vm.addressStreet;
+                vm.userData.addressCity = vm.addressCity;
+                vm.userData.addressCountry = vm.addressCountry;
+                vm.userData.id = accountData.uid;
+                FirebaseAuthFactory.storeUserData(accountData.uid, vm.userData);
+                vm.toggleSignUp();
+                vm.wrongEmail = false;
+            }, function() {
+                vm.wrongEmail = true;
             });
-          })
-       }
+        }
 
 
-  }
+        function authUser(email, password) {
+            FirebaseAuthFactory.authUser(email, password)
+            .then(function (authData) {
+                FirebaseAuthFactory.getUserData(authData.uid)
+                .then(function (userData) {
+                    vm.userData = userData;
+                    loginPanelService.updateUserData(vm.userData);
+                    loginPanelService.sayHello();
+                    var status = shoppingCartService.goToSummaryStatus;
+                    $window.location.hash = status.status ? '#/summary' : '#/';
+                    vm.wrongEmail = false;
+                });
+            }
+            ,function() {
+                vm.wrongEmail = true;
+            });
+        }
+
+
+        function toggleSignUp () {
+            vm.signUp = (!vm.signUp);
+        }
+         
+
+
+    }
 
 
 })();

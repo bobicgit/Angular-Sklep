@@ -1,49 +1,35 @@
-<nav class="nav">
 <div class="container-fluid">
- <div class="navbar-header">
+    <div class="my-navbar">
+        <div class="nav-div nav-left">
+            <a href="#/"><span class="glyphicon glyphicon-home"></span>
+            <span class="nav-weak">home</span></a>
+        </div>
 
-  <div class="navbar-header-2">
-    <div class="navbar-left">
-    <a href="#/">
-       <span class="glyphicon glyphicon-home home"></span><b class="go-to-cart">  Home</b>
-      </a>
-    </div>
-    
-    <div class="navbar-left" ng-show="!vm.userData.data">
-      <a ng-href="#/login"><span><b class="go-to-cart login">Log in</b></span></a>    
-    </div>
+        <div class="nav-div nav-left" ng-show="!vm.userData.data">
+            <a ng-href="#/login"><span>log in</span></a>
+        </div>
 
-    <div class="navbar-left" ng-show="vm.userData.data" ng-click="vm.logOut()">
-      <a ng-href="#/"><span><b class="go-to-cart login">Log out</b></span></a>    
+        <div class="nav-div nav-left" ng-show="vm.userData.data" ng-click="vm.logOut()">
+            <a ng-href="#/"><span>log out</span></a>
+        </div>
+
+        <div class="nav-div nav-left hello" ng-if="vm.userData.hello">
+            <span class="hello">hello! </span>
+        </div>
+
+        <div class="nav-div nav-left hello" ng-if="vm.bye">
+            <span class="hello">bye bye!</span>
+        </div>
+
+        <a href="#/cart"><div class="nav-div nav-right">
+            <span>{{vm.cart.itemsAmount}}</span>
+            <span class="nav-weak">items in</span>
+            <span class="glyphicon glyphicon-shopping-cart glyph"></span>
+        </div></a>
+
+        <div class="nav-div nav-right name" ng-if="vm.userData.data">
+            <span>{{vm.userData.data.customerDetails.firstName}}</span>
+        </div>
     </div>
-    
-    <div class="navbar-right">
-      <a href="#/cart"><b class="go-to-cart cart">{{vm.cart.itemsAmount}} items in</b><span class="glyphicon glyphicon-shopping-cart"></span><b class="go-to-cart cart">&nbsp; cart &nbsp;</b></a>
-    </div>
-    <div class="navbar-right userName" ng-if="vm.userData.data">
-      <a href="#/cart"><b class="go-to-cart cart">{{vm.userData.data.customerDetails.firstName}}</b></a>
-    </div>
-    <div class="navbar-right userName hello" ng-if="vm.userData.hello">
-      <a href="#/cart"><b class="go-to-cart cart">Hello !</b></a>
-    </div>
-    <div class="navbar-right userName hello" ng-if="vm.bye">
-      <a href="#/cart"><b class="go-to-cart cart">Bye bye!</b></a>
-    </div>
-  </div>
-   <!--  <div>
-      <a class="navbar-brand" href="#/">
-        <span class="glyphicon glyphicon-home"></span><b class="go-to-cart"> Home</b>
-      </a>
-    </div>
- 
-    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-6">
-      <ul class="nav navbar-nav">
-        <li class="active"><a ng-href="#/login"><span><b class="go-to-cart">Log in</b></span></a></li>
-      </ul>
-    </div>
-    <div class="nav navbar-nav navbar-right acme-navbar-text active">
-        <a href="#/cart">><b class="go-to-cart">{{vm.cart.itemsAmount}} items in</b><span class="glyphicon glyphicon-shopping-cart"></span><b class="go-to-cart">&nbsp; cart &nbsp;</b></a>
-      </div> -->
-  </div>
-  </div>
-</nav>
+</div>
+

@@ -1,11 +1,11 @@
 (function() {
-  'use strict';
+    'use strict';
 
   angular
-    .module('yoman')
+    .module('ng-shop')
     .directive('selectPanel', selectPanel);
 
-  /** @ngInject */
+  
     function selectPanel() {
 
     var directive = {
@@ -30,7 +30,7 @@
         vm.selectClass = '';
         $window.onscroll = function() {
             $scope.$apply(function () {
-                if ($window.pageYOffset > 320) {
+                if ($window.pageYOffset > 294) {
                     vm.selectClass = 'select-panel-fixed';
                 } else {
                     vm.selectClass = '';
@@ -67,10 +67,10 @@
         vm.changePagePreview = changePagePreview;
         vm.changePageNext = changePageNext;
 
-        vm.filterItems = filterItems;
-
         vm.changePictureSize = changePictureSize;
         vm.pictureSize = 'small';
+
+        vm.filterItems = filterItems;
 
         vm.addToCart = addToCart;
 
@@ -118,14 +118,17 @@
                 vm.chooseCategory = "choose category";
                 vm.filterCategory = {};
             }
+            vm.currentPage = 1;
         }
 
         function updatePriceMin (value) {
             vm.priceMin = value;
+            vm.currentPage = 1;
         } 
 
         function updatePriceMax (value) {
             vm.priceMax = value;
+            vm.currentPage = 1;
         } 
 
 
@@ -171,7 +174,9 @@
                     }
                 }
             }
+            vm.currentPage = 1;
         }
+
 
         // adding product to the cart
         // vm.active is a flag which ensure that only one request can be sended at the time
@@ -193,10 +198,6 @@
                 }, function () {vm.active = true});
             }
         } 
-
-        function func () {
-            console.log('ddd');
-        }
 
 
     }  

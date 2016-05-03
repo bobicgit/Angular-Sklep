@@ -1,40 +1,48 @@
 (function() {
-  'use strict';
+    'use strict';
 
 angular
-    .module('yoman')
+    .module('ng-shop')
     .controller('ProductDetailsController', ProductDetailsController);
 
   
 
-    ProductDetailsController.$inject = ['FirebaseFactory', '$window', '$location', '$timeout'];
+    ProductDetailsController.$inject = ['FirebaseFactory', '$window', '$location', '$timeout', 'FirebaseAuthFactory'];
 
-    function ProductDetailsController (FirebaseFactory, $window, $location, $timeout) {
+    function ProductDetailsController (FirebaseFactory, $window, $location, $timeout, FirebaseAuthFactory) {
 
 
         var vm = this;
 
-        vm.name;
-        vm.item;
+        vm.name = '';
+        vm.item = '';
+        vm.comments = [];
+        vm.active = true;
         vm.inputActive = false;
+
         vm.add = add;
         vm.showCommentInput = showCommentInput;
         vm.sendComment = sendComment;
-        vm.comments;
+       
 
-        vm.active = true;
+        initialize();
 
 
-        getProduct();
+
+        function initialize () {
+            FirebaseAuthFactory.initialize(); 
+            getProduct();
+        }       
+        
 
 
         // downloading data from database depending on hash location which conatains product's id
         // comments are put to other table for convenience
 
         function getProduct () {
+
             vm.id = $window.location.hash; 
-            var split = vm.id.split('/');
-            vm.id = split[1];
+            vm.id = vm.id.split('/')[1];
 
             FirebaseFactory.getItem(vm.id)
             .then(function(data) {
@@ -84,17 +92,14 @@ angular
 
             vm.inputActive = false;
 
-            FirebaseFactory.storeComment(comment, author, date, vm.id);
+            FirebaseFactory.storeComment(vm.item.id, comment, author, date);
             newComment = {comment:comment, author:author, date:date};
             vm.comments.push(newComment);
         }
 
 
-
-    
-
    
-  }
+    }
 
 
 })();

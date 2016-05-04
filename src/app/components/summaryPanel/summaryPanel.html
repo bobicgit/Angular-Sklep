@@ -5,10 +5,13 @@
     </div>
 
     <div class="jumbotron text-center">
-      
+
         <logo></logo>
-        
+
         <h1 class="summary" style="color:#8F9294" >Summary</h1>
+
+        <personal-info></personal-info>
+
         <h2 class="summary">Your products</h2>
         <br/>
 
@@ -43,7 +46,7 @@
           <div class="shop-container" ng-if="vm.cartItems.length>0">
            <div class="summary-bar"></div>
             <div class="row">
-            
+
             <div class="col-sm-6  col-xs-12 cart-item">
                 <div class="item-div">
                 <span class="cart-span summary">total cost</span></div>
@@ -52,13 +55,16 @@
                 <div class="item-div"><span class="cart-span summary"><b>{{vm.sum | currency}}</b></span></div>
             </div>
             <div class="col-sm-3 col-xs-6 cart-item">
-                <div class="item-div"><a href=""><button class="btn btn-success btn-lg cart-buy"><b>  buy!  </b></button></a></div>
+                <div class="item-div">
+                  <button class="btn btn-success btn-lg cart-buy"
+                          ng-click = "vm.buy()"><b>  Buy!  </b></button>
+                </div>
             </div>
             </div>
         </div>
 
-        <a href="#/"><button class="btn btn-success btn-lg buy"><b>  back to shop </b></button></a>
+        <a href="#/"><button class="btn btn-success btn-lg buy"><b>  Back to shop </b></button></a>
     </div>
 </div>
 
-    
+

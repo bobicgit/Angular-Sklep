@@ -10,8 +10,6 @@ angular
 
     function ShoppingCartController (shoppingCartService, FirebaseFactory, FirebaseAuthFactory) {
 
-
-
         var vm = this;
         vm.cartItems = [];
         vm.sum;
@@ -21,30 +19,21 @@ angular
         vm.removeItem = removeItem;
         vm.removeOneItem = removeOneItem;
         vm.changeStatus = changeStatus;
-        
 
         vm.isLogged = shoppingCartService.status;
         vm.goToBuy = vm.isLogged.logged ? "#/summary": "#/login";
 
-        
-        
-    
         initialize();
-
-
 
         function initialize () {
             readCart();
-            FirebaseAuthFactory.initialize(); 
-        }     
-        
+            FirebaseAuthFactory.initialize();
+        }
 
-        
         //It download cart items from database and updates the total cost
 
-
         function readCart() {
-            
+
             FirebaseFactory.readCart()
             .then(function(data) {
                 vm.cartItems = data;
@@ -52,8 +41,6 @@ angular
                 shoppingCartService.updateAmount(data);
             });
         }
-
-
 
         function removeItem (item) {
 
@@ -70,7 +57,6 @@ angular
             }
         }
 
-
         function updateSum () {
 
             var sum = 0;
@@ -80,8 +66,6 @@ angular
             vm.sum = sum;
         }
 
-
-
         // adding product to the cart
         // vm.active is a flag which ensure that only one request can be sended at the time
 
@@ -89,7 +73,7 @@ angular
 
             if (vm.active) {
                 vm.active = false;
-      
+
                 FirebaseFactory.addToCart(item)
                 .then(function(item) {
                     vm.active = true;
@@ -106,7 +90,6 @@ angular
             }
         }
 
-
         function removeOneItem (item) {
 
             if (item.amount > 1) {
@@ -119,15 +102,12 @@ angular
                         return;
                     }
                 }
-            } 
+            }
         }
 
         function changeStatus() {
             shoppingCartService.goToSummary(true);
         }
-
   }
-
-
 })();
 

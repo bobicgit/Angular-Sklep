@@ -11,7 +11,8 @@ angular
 
         var itemsRef = new Firebase('https://boiling-heat-8208.firebaseio.com/items');
 
-        var userRef = shoppingCartService.ref;
+        var userRef = shoppingCartService.ref,
+            userId;
 
         var factory = {
             getProducts : getProducts,
@@ -23,18 +24,26 @@ angular
             removeOneFromCart: removeOneFromCart,
             getItem:getItem,
             storeComment: storeComment,
-            mergeCarts: mergeCarts
+            mergeCarts: mergeCarts,
+            cacheLoggedUserId : cacheLoggedUserId,
+            readLoggedUserId: readLoggedUserId
         }
 
 
         return factory;
 
+        function cacheLoggedUserId(id) {
+          userId = id;
+        }
 
+        function readLoggedUserId() {
+          return userId;
+        }
 
         function getProducts () {
 
             var items;
-            
+
             var a = $q.defer();
             itemsRef.once("value", function(snapshot) {
                 items = [];
@@ -86,7 +95,7 @@ angular
                 var ref = new Firebase(userRef.userRef);
                 ref.once("value", function(snapshot) {
                     snapshot.forEach(function(childSnapshot) {
-                        if (childSnapshot.val().id === newItem.id) { 
+                        if (childSnapshot.val().id === newItem.id) {
                             var newAmount = childSnapshot.val().amount + 1;
                             ref.child(childSnapshot.key()).update({amount: newAmount});
                             added = true;
@@ -102,11 +111,11 @@ angular
                         newItem.amount = 1;
                         ref.push(newItem);
                     }
-                }    
-                
+                }
+
             }, function () {a.reject();});
 
-          return a.promise;  
+          return a.promise;
         }
 
 
@@ -137,7 +146,7 @@ angular
             var ref = new Firebase(userRef.userRef);
             ref.once("value", function(snapshot) {
                 snapshot.forEach(function(childSnapshot) {
-                    if (childSnapshot.val().id === item.id) { 
+                    if (childSnapshot.val().id === item.id) {
                         amount = childSnapshot.val().amount;
                         ref.child(childSnapshot.key()).remove();
                     }
@@ -150,9 +159,9 @@ angular
         function removeOneFromCart (item) {
 
             var ref = new Firebase(userRef.userRef);
-            ref.once("value", function(snapshot) {
+            ref.once("value", function(snapshot) {debugger;
                 snapshot.forEach(function(childSnapshot) {
-                    if (childSnapshot.val().id === item.id) { 
+                    if (childSnapshot.val().id === item.id) {
                         var newAmount = childSnapshot.val().amount -1 ;
                         ref.child(childSnapshot.key()).update({amount: newAmount});
                     }
@@ -168,10 +177,10 @@ angular
 
           //  console.log(item);
           //  console.log(amount);
-            
+
             itemsRef.once("value", function(snapshot) {
                 snapshot.forEach(function(childSnapshot) {
-                    if (childSnapshot.val().id === item.id) { 
+                    if (childSnapshot.val().id === item.id) {
                         var newAvailable = childSnapshot.val().available + amount;
                         itemsRef.child(childSnapshot.key()).update({available: newAvailable});
                     }
@@ -193,7 +202,7 @@ angular
                 var comments = [];
 
                 snapshot.forEach(function(childSnapshot) {
-                   if (childSnapshot.key() === 'comments') { 
+                   if (childSnapshot.key() === 'comments') {
                         childSnapshot.forEach(function(childSnapshott) {
                             comments.push(childSnapshott.val());
                         });
@@ -218,9 +227,9 @@ angular
 
 
         // used when the unlogged user had put something into cart
-        // then the product that are already on his account are removed 
-        // when the cart of unlogged user is empty, 
-        // products on his account stay 
+        // then the product that are already on his account are removed
+        // when the cart of unlogged user is empty,
+        // products on his account stay
 
 
         function mergeCarts () {
@@ -238,9 +247,9 @@ angular
                                 ref.push(item);
                             });
                             shoppingCartService.updateAmount(items.length);
-                            
-                        }); 
-                        
+
+                        });
+
                     }
 
                 });
@@ -250,7 +259,7 @@ angular
                 var a = $q.defer();
                 var ref = new Firebase('https://boiling-heat-8208.firebaseio.com/usersUnlogged/' + localStorage.AnonymousFirebaseUid +'/cart');
                     ref.once("value", function(snapshot) {
-                    var items = [];  
+                    var items = [];
                     snapshot.forEach(function(childSnapshot) {
                         items.push(childSnapshot.val());
                     });
@@ -272,7 +281,7 @@ angular
                 a.resolve();
             });
             return a.promise;
-        }    
+        }
 
     }
 

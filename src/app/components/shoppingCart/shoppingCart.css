@@ -94,7 +94,7 @@ h2 {
 .glyphicon-triangle-bottom, .glyphicon-triangle-top {
     display:none;
     font-size: 1.5em;
-} 
+}
 
 .cart-item:hover .glyphicon-triangle-bottom,
 .cart-item:hover .glyphicon-triangle-top  {
@@ -115,6 +115,6 @@ h2 {
 }
 
 .empty-cart {
-    color:#73777A;
+    color:#73777C;
 }
 

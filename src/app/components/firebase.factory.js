@@ -57,7 +57,7 @@ angular
         }
 
 
-        function readCart () {
+        function readCart () {debugger;
             var cart;
             var ref = new Firebase(userRef.userRef);
             var a = $q.defer();

@@ -5,8 +5,6 @@ angular
     .module("ng-shop")
     .factory("FirebaseFactory", FirebaseFactory);
 
-
-
     function FirebaseFactory ($q, shoppingCartService) {
 
         var itemsRef = new Firebase('https://boiling-heat-8208.firebaseio.com/items');
@@ -57,7 +55,7 @@ angular
         }
 
 
-        function readCart () {debugger;
+        function readCart () {
             var cart;
             var ref = new Firebase(userRef.userRef);
             var a = $q.defer();
@@ -159,7 +157,7 @@ angular
         function removeOneFromCart (item) {
 
             var ref = new Firebase(userRef.userRef);
-            ref.once("value", function(snapshot) {debugger;
+            ref.once("value", function(snapshot) {
                 snapshot.forEach(function(childSnapshot) {
                     if (childSnapshot.val().id === item.id) {
                         var newAmount = childSnapshot.val().amount -1 ;

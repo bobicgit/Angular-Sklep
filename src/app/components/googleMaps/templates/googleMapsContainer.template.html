@@ -1,0 +1,10 @@
+<section>
+   <div class = "row">
+     <div class="col-md-12" ng-if="!gMapsCtrl.apiReady">
+        LOADING
+     </div>
+    <div class="col-md-12" ng-if="gMapsCtrl.apiReady">
+      <g-map apiready="gMapsCtrl.userInfoOK"></g-map>
+    </div>
+  </div>
+</section>

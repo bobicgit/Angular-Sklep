@@ -6,9 +6,9 @@ angular
     .controller('SummaryController', SummaryController);
 
 
-    SummaryController.$inject = ['FirebaseFactory', 'shoppingCartService', 'FirebaseAuthFactory', 'loginPanelService', '$location'];
+    SummaryController.$inject = ['$scope', 'FirebaseFactory', 'shoppingCartService', 'FirebaseAuthFactory', 'loginPanelService', '$location','cacheUserDetails'];
 
-    function SummaryController(FirebaseFactory, shoppingCartService, FirebaseAuthFactory, loginPanelService, $location) {
+    function SummaryController($scope, FirebaseFactory, shoppingCartService, FirebaseAuthFactory, loginPanelService, $location,cacheUserDetails) {
 
       var vm = this,
           userId;
@@ -36,6 +36,7 @@ angular
           })
           .then(function(userInfofromDB) {
             vm.userInfo = userInfofromDB.customerDetails;
+            cacheUserDetails.cacheUserInfo(vm.userInfo);
           })
       }
 
@@ -64,6 +65,9 @@ angular
       function submitEditForm() {
         vm.showEditField = false;
         vm.showActualAddress = true;
+        cacheUserDetails.cacheUserInfo(vm.userInfo);
+        //console.log(vm.userInfo);
+
       }
 
       function buy() {

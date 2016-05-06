@@ -8,14 +8,17 @@ angular
 
     SummaryController.$inject = ['$scope', 'FirebaseFactory', 'shoppingCartService', 'FirebaseAuthFactory', 'loginPanelService', '$location','cacheUserDetails'];
 
-    function SummaryController($scope, FirebaseFactory, shoppingCartService, FirebaseAuthFactory, loginPanelService, $location,cacheUserDetails) {
+    function SummaryController($scope, FirebaseFactory, shoppingCartService, FirebaseAuthFactory, loginPanelService, $location, cacheUserDetails) {
 
       var vm = this,
           userId;
 
+
+      vm.newAddress;
+
       vm.cartItems = [];
       vm.sum = 0;
-      vm.userInfo = {};
+      vm.userInfos = {};
       vm.showEditField = false;
       vm.showActualAddress = true;
       vm.submitEditForm = submitEditForm;
@@ -35,8 +38,9 @@ angular
             return FirebaseAuthFactory.getUserData(userId);
           })
           .then(function(userInfofromDB) {
-            vm.userInfo = userInfofromDB.customerDetails;
-            cacheUserDetails.cacheUserInfo(vm.userInfo);
+            vm.userInfos = userInfofromDB.customerDetails;
+            vm.newAddress = vm.userInfos.addressCountry + ' ' + vm.userInfos.addressCity + ' ' + vm.userInfos.addressStreet;
+
           })
       }
 
@@ -65,17 +69,15 @@ angular
       function submitEditForm() {
         vm.showEditField = false;
         vm.showActualAddress = true;
-        cacheUserDetails.cacheUserInfo(vm.userInfo);
-        //console.log(vm.userInfo);
-
+        vm.newAddress = vm.userInfos.addressCountry + ' ' + vm.userInfos.addressCity + ' ' + vm.userInfos.addressStreet;
+        cacheUserDetails.cacheNewAddress(vm.newAddress);
+        console.log(vm.newAddress);
       }
 
       function buy() {
-        console.log(vm.cartItems);
           vm.cartItems.forEach(function(item) {
             FirebaseFactory.removeOneFromCart(item);
           });
-
          $location.path("/");
       }
     }

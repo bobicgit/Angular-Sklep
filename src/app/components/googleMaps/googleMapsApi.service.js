@@ -1,3 +1,5 @@
+/*eslint angular/document-service: 1*/
+
 (function() {
 
     'use strict';
@@ -25,12 +27,7 @@
             var firstScriptTag = document.getElementsByTagName('script')[0];
             firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 
-            // var secTag = document.createElement('script');
-            // secTag.src = "http://www.geoplugin.net/javascript.gp";
-            // var secondScriptTag = document.getElementsByTagName('script')[0];
-            // secondScriptTag.parentNode.insertBefore(secTag, secondScriptTag);
-
-             $window.init = apiReady.resolve;
+            $window.init = apiReady.resolve;
         }
     }
 })();

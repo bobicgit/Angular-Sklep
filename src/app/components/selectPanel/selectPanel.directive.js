@@ -5,7 +5,8 @@
     .module('ng-shop')
     .directive('selectPanel', selectPanel);
 
-  
+    selectPanel.$inject = ['FirebaseFactory', 'shoppingCartService'];
+
     function selectPanel() {
 
     var directive = {
@@ -16,17 +17,14 @@
         bindToController: true
     };
 
-
     return directive;
 
-    SelectPanelController.$inject = ['FirebaseFactory', 'shoppingCartService'];
-    
     function SelectPanelController($scope, $window, $timeout, FirebaseFactory, shoppingCartService) {
 
       // "sp.creationDate" is available by directive option "bindToController: true"
         var vm = this;
 
-        
+
         vm.selectClass = '';
         $window.onscroll = function() {
             $scope.$apply(function () {
@@ -35,7 +33,7 @@
                 } else {
                     vm.selectClass = '';
                 }
-            }) 
+            })
         }
 
 
@@ -76,26 +74,23 @@
 
         vm.active = true;
 
-      
-   
         initialize();
-
 
         // downloads products data from database and updates cart counter
 
         function initialize () {
             FirebaseFactory.getProducts()
-            .then(function (data) { 
-                vm.allItems = data; 
+            .then(function (data) {
+                vm.allItems = data;
                 vm.itemsFiltered = data;
                 updateCategoryList();
             });
-            
+
             FirebaseFactory.readCart()
             .then(function(data) {
                 shoppingCartService.updateAmount(data);
             });
-        
+
         }
 
 
@@ -124,12 +119,12 @@
         function updatePriceMin (value) {
             vm.priceMin = value;
             vm.currentPage = 1;
-        } 
+        }
 
         function updatePriceMax (value) {
             vm.priceMax = value;
             vm.currentPage = 1;
-        } 
+        }
 
 
         function updateItemsOnPageAmount (value) {
@@ -154,16 +149,16 @@
 
         function changePictureSize (size) {
             vm.pictureSize = size;
-        } 
-        
+        }
+
 
 
         // it filters items on query given in text input
 
-        function filterItems () {  
+        function filterItems () {
 
-            if (vm.findItem === "") { 
-                vm.itemsFiltered = vm.allItems; 
+            if (vm.findItem === "") {
+                vm.itemsFiltered = vm.allItems;
             } else {
                 vm.itemsFiltered = [];
                 var regex = new RegExp( vm.findItem, "g");
@@ -184,7 +179,7 @@
         function addToCart (item) {
             if (vm.active) {
                 vm.active = false;
-                
+
                 FirebaseFactory.addToCart(item)
                 .then(function() {
                     vm.allItems.forEach(function(cacheItem) {
@@ -197,10 +192,10 @@
                     });
                 }, function () {vm.active = true});
             }
-        } 
+        }
 
 
-    }  
+    }
 }
 
 

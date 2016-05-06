@@ -1,3 +1,4 @@
+
 (function() {
     'use strict';
 
@@ -11,6 +12,8 @@
         var ref = new Firebase('https://boiling-heat-8208.firebaseio.com/users');
         // ref.onAuth(checkStatus);
 
+        initialize();
+
         var factory = {
           addUser: addUser,
           storeUserData: storeUserData,
@@ -22,9 +25,9 @@
           getAnonymousCartData: getAnonymousCartData
         }
 
-        return factory
+        return factory;
 
-        initialize();
+
 
         function initialize () {
           var defer = $q.defer();

@@ -7,13 +7,16 @@
     .module('ng-shop')
     .directive('googleMapsContainer', googleMapsContainer);
 
-    googleMapsContainer.$inject = ['googleMapApiService', 'cacheUserDetails'];
+    // googleMapsContainer.$inject = ['googleMapApiService', 'cacheUserDetails','$scope'];
 
     function googleMapsContainer() {
 
     return {
       restrict: "E",
       templateUrl: 'app/components/googleMaps/templates/googleMapsContainer.template.html',
+      scope: {
+        address: '@'
+      },
       controller: gMapsContainerController,
       controllerAs: 'gMapsCtrl'
     }
@@ -22,14 +25,7 @@
 
       var vm = this;
 
-      $scope.$watch(function(){
-          return cacheUserDetails.userInfo;
-      }, function(userInfo){
-          if(typeof userInfo !== 'undefined'){
-            console.log(userInfo);
-            vm.userInfoOK = userInfo;
-          }
-      });
+      // vm.address = $scope.address;
 
       vm.apiReady = false;
 

@@ -11,8 +11,7 @@
     function googleMapLocationService( $q, FirebaseFactory, FirebaseAuthFactory, cacheUserDetails) {
 
         var vm = this,
-            geocoder = new google.maps.Geocoder(),
-            userAddress;
+            geocoder = new google.maps.Geocoder();
 
         vm.destinationLocation = {};
         vm.storageLocation = {
@@ -21,22 +20,18 @@
         };
         vm.geocodeAddress = geocodeAddress;
 
-
-        function geocodeAddress() {
-            var defer = $q.defer();
-                    var userInfo = cacheUserDetails.userInfo;
-                    var address = userInfo.addressCountry + ' ' + userInfo.addressCity + ' ' + userInfo.addressStreet;
-                    geocoder.geocode({'address': address}, function(results, status) {
-                    if (status === google.maps.GeocoderStatus.OK) {
-                        vm.destinationLocation['lat'] = results[0].geometry.location.lat();
-                        vm.destinationLocation['lng'] = results[0].geometry.location.lng();
-                        defer.resolve(vm.destinationLocation);
-                    } else {
-                      defer.reject(status);
-                    }
-                  });
-
-            return defer.promise;
+        function geocodeAddress(address) {
+          var defer = $q.defer();
+          geocoder.geocode({'address': address}, function(results, status) {
+          if (status === google.maps.GeocoderStatus.OK) {
+            vm.destinationLocation['lat'] = results[0].geometry.location.lat();
+            vm.destinationLocation['lng'] = results[0].geometry.location.lng();
+            defer.resolve(vm.destinationLocation);
+          } else {
+            defer.reject(status);
+          }
+        });
+          return defer.promise;
         }
     }
 })();

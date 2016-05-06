@@ -1,3 +1,4 @@
+/*eslint angular/document-service: 1*/
 (function() {
 
   'use strict';
@@ -6,48 +7,61 @@
     .module('ng-shop')
     .directive('gMap', gMap);
 
-    gMap.$inject = ['$window','googleMapLocationService', 'cacheUserDetails'];
+    gMap.$inject = ['$window','googleMapLocationService','FirebaseAuthFactory','FirebaseFactory','cacheUserDetails'];
 
-    function gMap($window, googleMapLocationService, cacheUserDetails) {
+    function gMap($window, googleMapLocationService, FirebaseAuthFactory, FirebaseFactory,cacheUserDetails) {
 
       return {
         restrict: "E",
-        scope: {
-          apiready: "="
-        },
-        require: '^googleMapsContainer',
         template: '<div id="map"></div>',
-        link: function(scope, element, attributes, googleMapsContainer) {
 
-        scope.$watch('apiready', initMap, true);
+        link: function(scope, elem, attrs) {
 
-        function initMap() {
-          googleMapLocationService
-            .geocodeAddress()
-            .then(function(destinationLocation) {
-              var storagePoint = new google.maps.LatLng(googleMapLocationService.storageLocation.lat, googleMapLocationService.storageLocation.lng),
-                  destinationPoint = new google.maps.LatLng(destinationLocation.lat, destinationLocation.lng),
+          var address  = '';
 
-                  mapOptions = {
-                    zoom: 10,
-                    center: storagePoint
-                  },
+          // initialize();
 
-                  map = new google.maps.Map(document.getElementById("map"), mapOptions),
-                  directionsService = new google.maps.DirectionsService,
-                  directionsDisplay = new google.maps.DirectionsRenderer({
-                    map: map
-                  });
-              //     storageMarker = new google.maps.Marker({
-              //       position:storagePoint,
-              //       icon:'assets/images/storage.png'
-              //       });
-              // storageMarker.setMap(map);
+          attrs.$observe('address', initMap)
 
-              calculateAndDisplayRoute(directionsService,directionsDisplay, storagePoint, destinationPoint);
-            });
-        }
+          // function initialize() {
 
+          //   FirebaseAuthFactory.initialize()
+          //     .then(function() {
+          //       var userId = FirebaseFactory.readLoggedUserId();
+          //       return userId;
+          //     })
+          //     .then(function(userId) {
+          //       return FirebaseAuthFactory.getUserData(userId);
+          //     })
+          //     .then(function(userInfofromDB) {
+          //       var userInfo = userInfofromDB.customerDetails;
+          //       address = userInfo.addressCountry + ' ' + userInfo.addressCity + ' ' + userInfo.addressStreet;
+          //       console.log(address);
+          //       return address;
+          //     })
+          //     .then(function(address) {
+          //       initMap(address);
+          //     })
+          // }
+
+          function initMap(address) {
+            googleMapLocationService
+              .geocodeAddress(address)
+              .then(function(destinationLocation) {
+                var storagePoint = new google.maps.LatLng(googleMapLocationService.storageLocation.lat, googleMapLocationService.storageLocation.lng),
+                    destinationPoint = new google.maps.LatLng(destinationLocation.lat, destinationLocation.lng),
+                    mapOptions = {
+                      zoom: 10,
+                      center: storagePoint
+                    },
+                    map = new google.maps.Map(document.getElementById("map"), mapOptions),
+                    directionsService = new google.maps.DirectionsService,
+                    directionsDisplay = new google.maps.DirectionsRenderer({
+                      map: map
+                    });
+                calculateAndDisplayRoute(directionsService,directionsDisplay, storagePoint, destinationPoint);
+              });
+          }
 
           function calculateAndDisplayRoute(directionsService, directionsDisplay, storagePoint, destinationPoint) {
             directionsService.route({

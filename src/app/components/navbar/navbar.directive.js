@@ -5,6 +5,7 @@ angular
     .module('ng-shop')
     .directive('acmeNavbar', acmeNavbar);
 
+    acmeNavbar.$inject = ['shoppingCartService', 'loginPanelService', 'FirebaseAuthFactory'];
 
     function acmeNavbar() {
         var directive = {
@@ -18,10 +19,6 @@ angular
 
         return directive;
 
-
-
-        NavbarController.$inject = ['shoppingCartService', 'loginPanelService', 'FirebaseAuthFactory'];
-
         function NavbarController ($window, $location, $timeout, shoppingCartService, loginPanelService, FirebaseAuthFactory) {
 
             var vm = this;
@@ -31,8 +28,6 @@ angular
 
             vm.cart = shoppingCartService.cart;
             vm.userData = loginPanelService.userData;
-         
-
 
             function logOut () {
                 $window.location.hash = '#/';

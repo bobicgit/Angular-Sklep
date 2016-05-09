@@ -7,42 +7,17 @@
     .module('ng-shop')
     .directive('gMap', gMap);
 
-    gMap.$inject = ['$window','googleMapLocationService','FirebaseAuthFactory','FirebaseFactory','cacheUserDetails'];
+    gMap.$inject = ['$window','googleMapLocationService'];
 
-    function gMap($window, googleMapLocationService, FirebaseAuthFactory, FirebaseFactory,cacheUserDetails) {
+    function gMap($window, googleMapLocationService) {
 
       return {
         restrict: "E",
         template: '<div id="map"></div>',
-
-        link: function(scope, elem, attrs) {
-
-          var address  = '';
-
-          // initialize();
+        require: "^googleMapsContainer",
+        link: function(scope, elem, attrs, gmapContainer) {
 
           attrs.$observe('address', initMap)
-
-          // function initialize() {
-
-          //   FirebaseAuthFactory.initialize()
-          //     .then(function() {
-          //       var userId = FirebaseFactory.readLoggedUserId();
-          //       return userId;
-          //     })
-          //     .then(function(userId) {
-          //       return FirebaseAuthFactory.getUserData(userId);
-          //     })
-          //     .then(function(userInfofromDB) {
-          //       var userInfo = userInfofromDB.customerDetails;
-          //       address = userInfo.addressCountry + ' ' + userInfo.addressCity + ' ' + userInfo.addressStreet;
-          //       console.log(address);
-          //       return address;
-          //     })
-          //     .then(function(address) {
-          //       initMap(address);
-          //     })
-          // }
 
           function initMap(address) {
             googleMapLocationService
@@ -59,6 +34,7 @@
                     directionsDisplay = new google.maps.DirectionsRenderer({
                       map: map
                     });
+
                 calculateAndDisplayRoute(directionsService,directionsDisplay, storagePoint, destinationPoint);
               });
           }
@@ -71,8 +47,11 @@
                 avoidHighways: false,
                 travelMode: google.maps.TravelMode.DRIVING
             }, function (response, status) {
+              //console.log(response.routes[0].legs[0].distance.text);
                 if (status == google.maps.DirectionsStatus.OK) {
-                    directionsDisplay.setDirections(response);
+                  directionsDisplay.setDirections(response);
+                  scope.$emit('distance', response.routes[0].legs[0].distance.text);
+                  //gmapContainer.distance = response.routes[0].legs[0].distance.text;
                 }
             });
           }

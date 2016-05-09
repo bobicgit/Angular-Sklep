@@ -18,7 +18,7 @@
         }
 
         function logOut () {
-          self.userData.data = '';
+          self.userData = false;
           self.userData.hello = false;
         }
 

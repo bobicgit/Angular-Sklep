@@ -6,9 +6,9 @@ angular
     .controller('SummaryController', SummaryController);
 
 
-    SummaryController.$inject = ['$scope', 'FirebaseFactory', 'shoppingCartService', 'FirebaseAuthFactory', 'loginPanelService', '$location','cacheUserDetails'];
+    SummaryController.$inject = ['$scope', 'FirebaseFactory', 'shoppingCartService', 'FirebaseAuthFactory', 'loginPanelService', '$location','$q'];
 
-    function SummaryController($scope, FirebaseFactory, shoppingCartService, FirebaseAuthFactory, loginPanelService, $location, cacheUserDetails) {
+    function SummaryController($scope, FirebaseFactory, shoppingCartService, FirebaseAuthFactory, loginPanelService, $location, $q) {
 
       var vm = this,
           userId;
@@ -23,7 +23,7 @@ angular
       vm.showActualAddress = true;
       vm.submitEditForm = submitEditForm;
       vm.editFields = editFields;
-      vm.buy = buy;
+      vm.buyItems = buyItems;
 
       initialize();
 
@@ -40,7 +40,6 @@ angular
           .then(function(userInfofromDB) {
             vm.userInfos = userInfofromDB.customerDetails;
             vm.newAddress = vm.userInfos.addressCountry + ' ' + vm.userInfos.addressCity + ' ' + vm.userInfos.addressStreet;
-
           })
       }
 
@@ -70,15 +69,28 @@ angular
         vm.showEditField = false;
         vm.showActualAddress = true;
         vm.newAddress = vm.userInfos.addressCountry + ' ' + vm.userInfos.addressCity + ' ' + vm.userInfos.addressStreet;
-        cacheUserDetails.cacheNewAddress(vm.newAddress);
-        console.log(vm.newAddress);
       }
 
       function buy() {
-          vm.cartItems.forEach(function(item) {
-            FirebaseFactory.removeOneFromCart(item);
-          });
-         $location.path("/");
+        var arrayOfPromisses = [];
+        if(vm.cartItems.length > 0) {
+          for(var i = 0; i<vm.cartItems.length; i++) {
+            arrayOfPromisses.push(FirebaseFactory.reduceCountInFB(vm.cartItems[i]));
+          }
+          return $q.all(arrayOfPromisses);
+        } else {
+          return $q.reject('No items to remove my friend!');
+        }
+      }
+
+      function buyItems() {
+        buy()
+        .then(function() {
+          return FirebaseFactory.destroyCartOfSpecificUser();
+        })
+        .then(function() {
+          $location.path("/");
+        })
       }
     }
 })();

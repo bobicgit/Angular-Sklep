@@ -10,9 +10,7 @@
     function FirebaseAuthFactory($q, $timeout, loginPanelService, shoppingCartService, LocalStorageFactory, FirebaseFactory) {
 
         var ref = new Firebase('https://boiling-heat-8208.firebaseio.com/users');
-        // ref.onAuth(checkStatus);
-
-        initialize();
+        ref.onAuth(checkStatus);
 
         var factory = {
           addUser: addUser,
@@ -27,12 +25,12 @@
 
         return factory;
 
-
+        //initialize();
 
         function initialize () {
           var defer = $q.defer();
 
-          defer.resolve(ref.onAuth(checkStatus));
+          defer.resolve(checkStatus);
 
           return defer.promise;
         }
@@ -46,6 +44,7 @@
               FirebaseFactory.cacheLoggedUserId(data.uid);
               getUserData(data.uid)
               .then(function (data) {
+
                       if (data.cart) {
                           var l = 0;
                           for (var i in data.cart) {
@@ -55,8 +54,7 @@
                       } else {
                           shoppingCartService.updateAmount(0);
                       }
-                      // console.log(data.customerDetails);
-                  loginPanelService.updateUserData(data.customerDetails);
+                      loginPanelService.updateUserData(data.customerDetails);
               });
           } else {
              var id = LocalStorageFactory.checkForAnonymousUid();

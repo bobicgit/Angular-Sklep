@@ -15,9 +15,9 @@ angular
 
 
         function initialize () {
-            FirebaseAuthFactory.initialize(); 
-        }       
-            
+            FirebaseAuthFactory.initialize();
+        }
+
 
     }
 

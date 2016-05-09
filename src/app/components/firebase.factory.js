@@ -24,7 +24,9 @@ angular
             storeComment: storeComment,
             mergeCarts: mergeCarts,
             cacheLoggedUserId : cacheLoggedUserId,
-            readLoggedUserId: readLoggedUserId
+            readLoggedUserId: readLoggedUserId,
+            reduceCountInFB: reduceCountInFB,
+            destroyCartOfSpecificUser: destroyCartOfSpecificUser
         }
 
 
@@ -134,6 +136,22 @@ angular
             return a.promise;
         }
 
+      // Function called, after user confirm shopping clicking on "Buy" button.
+      // It reduces property "Count" in items object.
+
+        function reduceCountInFB(item) {
+          var defer = $q.defer();
+          itemsRef.child(item.id).once("value", function(snapshot) {
+              if (snapshot.val().count > 0 ) {
+                  var newCount = snapshot.val().count - item.amount;
+                  itemsRef.child(snapshot.key()).update({count: newCount});
+                  defer.resolve(item);
+              } else {
+              defer.reject();
+              }
+          });
+          return defer.promise;
+        }
 
         // removes all items from cart
 
@@ -232,8 +250,6 @@ angular
 
         function mergeCarts () {
 
-
-
             if (localStorage.AnonymousFirebaseUid) {
                 getProductsFromAnonymousUser()
                 .then(function (items) {
@@ -281,7 +297,14 @@ angular
             return a.promise;
         }
 
+        function destroyCartOfSpecificUser() {
+          var defer = $q.defer(),
+              ref = new Firebase(userRef.userRef);
+          ref.once("value", function() {
+              ref.remove();
+              defer.resolve();
+          });
+          return defer.promise;
+        }
     }
-
-
 })();

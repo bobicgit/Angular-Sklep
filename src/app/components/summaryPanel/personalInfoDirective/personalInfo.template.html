@@ -1,39 +1,28 @@
-<div class="container" ng-controller = "SummaryController as vm">
+<div class="container summaryPanel" ng-controller = "SummaryController as vm">
   <div class="row">
-    <h3>There are your personal data and shipping address. If you want to change shipping address, click button below.</h3>
+    <h3 id="infoForUser">There are your personal data and shipping address. If you want to change shipping address, click button below.</h3>
       <div class="col-md-6">
-        <div class="col-md-6">
-          <p>First Name</p>
-          <p>Last Name</p>
-          <p>eMail</p>
-          <p>Phone Number</p>
-          <p>Address</p>
-          <p>City</p>
-          <p>Country</p>
-        </div>
-        <div class="col-md-6">
-            <form  ng-submit = "vm.submitEditForm()">
-              <p ng-if="vm.showActualAddress">{{vm.userInfos.firstName}}</p>
-                <input ng-if="vm.showEditField" class="edit" ng-model="vm.userInfos.fi rstName" required></input>
-              <p ng-if="vm.showActualAddress">{{vm.userInfos.surname}}</p>
-                <input ng-if="vm.showEditField" class="edit" ng-model="vm.userInfos.surname" required></input>
-              <p ng-if="vm.showActualAddress">{{vm.userInfos.email}}</p>
-                <input ng-if="vm.showEditField" class="edit" ng-model="vm.userInfos.email" required></input>
-              <p ng-if="vm.showActualAddress">{{vm.userInfos.phoneNumber}}</p>
-                <input ng-if="vm.showEditField" class="edit" ng-model="vm.userInfos.phoneNumber" required></input>
-              <p ng-if="vm.showActualAddress">{{vm.userInfos.addressStreet}}</p>
-                <input ng-if="vm.showEditField" class="edit" ng-model="vm.userInfos.addressStreet" required></input>
-              <p ng-if="vm.showActualAddress">{{vm.userInfos.addressCity}}</p>
-                <input ng-if="vm.showEditField" class="edit" ng-model="vm.userInfos.addressCity" required></input>
-              <p ng-if="vm.showActualAddress">{{vm.userInfos.addressCountry}}</p>
-                <input ng-if="vm.showEditField" class="edit" ng-model="vm.userInfos.addressCountry" required></input>
-           </form>
-        </div>
-      </div>
-      <div class="col-md-6">
+        <form  ng-submit = "vm.submitEditForm()">
+          <p ng-if="vm.showActualAddress">{{vm.userInfos.firstName}}</p>
+            <input ng-if="vm.showEditField" class="edit" ng-model="vm.userInfos.firstName" required></input>
+          <p ng-if="vm.showActualAddress">{{vm.userInfos.surname}}</p>
+            <input ng-if="vm.showEditField" class="edit" ng-model="vm.userInfos.surname" required></input>
+          <p ng-if="vm.showActualAddress">{{vm.userInfos.email}}</p>
+            <input ng-if="vm.showEditField" class="edit" ng-model="vm.userInfos.email" required></input>
+          <p ng-if="vm.showActualAddress">{{vm.userInfos.phoneNumber}}</p>
+            <input ng-if="vm.showEditField" class="edit" ng-model="vm.userInfos.phoneNumber" required></input>
+          <p ng-if="vm.showActualAddress">{{vm.userInfos.addressStreet}}</p>
+            <input ng-if="vm.showEditField" class="edit" ng-model="vm.userInfos.addressStreet" required></input>
+          <p ng-if="vm.showActualAddress">{{vm.userInfos.addressCity}}</p>
+            <input ng-if="vm.showEditField" class="edit" ng-model="vm.userInfos.addressCity" required></input>
+          <p ng-if="vm.showActualAddress">{{vm.userInfos.addressCountry}}</p>
+            <input ng-if="vm.showEditField" class="edit" ng-model="vm.userInfos.addressCountry" required></input>
+        </form>
         <button class="btn btn-success btn-lg changeAddress" ng-click="vm.editFields()" ng-if="vm.showActualAddress"> Change shipping address and personal info</button>
         <button class="btn btn-danger btn-lg changeAddress" ng-click="vm.submitEditForm()" ng-if="vm.showEditField"> Accept changes</button>
       </div>
-      <google-maps-container address="{{vm.newAddress}}"></google-maps-container>
+      <div class="col-md-6">
+         <google-maps-container address="{{vm.newAddress}}"></google-maps-container>
+      </div>
   </div>
 </div>

@@ -21,18 +21,23 @@
       controllerAs: 'gMapsCtrl'
     }
 
-    function gMapsContainerController(googleMapApiService, cacheUserDetails, $scope) {
+    function gMapsContainerController(googleMapApiService, $scope) {
 
       var vm = this;
 
-      // vm.address = $scope.address;
-
       vm.apiReady = false;
+      // vm.distance;
 
       googleMapApiService.onReady()
         .then(function() {
             vm.apiReady = true;
       })
+
+      $scope.$on('distance', function () {
+        //console.log(arguments);
+        vm.distance = arguments[1];
+        console.log(vm.distance);
+      });
 
     }
   }

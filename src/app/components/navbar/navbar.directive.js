@@ -29,6 +29,7 @@ angular
             vm.cart = shoppingCartService.cart;
             vm.userData = loginPanelService.userData;
 
+
             function logOut () {
                 $window.location.hash = '#/';
                 shoppingCartService.setRef();
@@ -40,11 +41,7 @@ angular
                 }, 2000);
                 shoppingCartService.goToSummary(false);
             }
-
-
-
         }
-
     }
 
 })();

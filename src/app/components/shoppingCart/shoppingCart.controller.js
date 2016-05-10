@@ -27,7 +27,7 @@ angular
 
         function initialize () {
             readCart();
-            FirebaseAuthFactory.initialize();
+            FirebaseAuthFactory.checkStatusOfLog();
         }
 
         //It download cart items from database and updates the total cost

@@ -7,18 +7,18 @@
     function loginPanelService ($timeout) {
 
         var self = this;
-        self.userData;
+        self.userData = {};
 
         self.updateUserData = updateUserData;
         self.logOut = logOut;
         self.sayHello = sayHello;
 
         function updateUserData (userData) {
-          self.userData = userData;
+          self.userData.data = userData;
         }
 
         function logOut () {
-          self.userData = false;
+          self.userData.data = '';
           self.userData.hello = false;
         }
 

@@ -5,11 +5,11 @@
             <span class="nav-weak">home</span></a>
         </div>
 
-        <div class="nav-div nav-left" ng-show="!vm.userData">
+        <div class="nav-div nav-left" ng-show="!vm.userData.data">
             <a ng-href="#/login"><span>log in</span></a>
         </div>
 
-        <div class="nav-div nav-left" ng-show="vm.userData" ng-click="vm.logOut()">
+        <div class="nav-div nav-left" ng-show="vm.userData.data" ng-click="vm.logOut()">
             <a ng-href="#/"><span>log out</span></a>
         </div>
 
@@ -28,7 +28,7 @@
         </div></a>
 
         <div class="nav-div nav-right name" ng-if="vm.userData.data">
-            <span>{{vm.userData.data.customerDetails.firstName}}</span>
+            <span>{{vm.userData.data.firstName}}</span>
         </div>
     </div>
 </div>

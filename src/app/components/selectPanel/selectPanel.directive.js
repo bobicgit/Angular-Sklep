@@ -36,7 +36,6 @@
             })
         }
 
-
         vm.allItems = [];
         vm.itemsFiltered = vm.allItems;
 
@@ -92,7 +91,6 @@
             });
 
         }
-
 
         function updateCategoryList () {
             //sorts data depending on its category

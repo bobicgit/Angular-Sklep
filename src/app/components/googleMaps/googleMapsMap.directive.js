@@ -13,9 +13,8 @@
 
       return {
         restrict: "E",
-        template: '<div id="map"></div>',
-        require: "^googleMapsContainer",
-        link: function(scope, elem, attrs, gmapContainer) {
+        template: '<div id="map"></div><div id="distance"></div>',
+        link: function(scope, elem, attrs) {
 
           attrs.$observe('address', initMap)
 
@@ -41,17 +40,16 @@
 
           function calculateAndDisplayRoute(directionsService, directionsDisplay, storagePoint, destinationPoint) {
             directionsService.route({
-                origin: storagePoint,
-                destination: destinationPoint,
-                avoidTolls: true,
-                avoidHighways: false,
-                travelMode: google.maps.TravelMode.DRIVING
+              origin: storagePoint,
+              destination: destinationPoint,
+              avoidTolls: true,
+              avoidHighways: false,
+              travelMode: google.maps.TravelMode.DRIVING
             }, function (response, status) {
-              //console.log(response.routes[0].legs[0].distance.text);
                 if (status == google.maps.DirectionsStatus.OK) {
                   directionsDisplay.setDirections(response);
-                  scope.$emit('distance', response.routes[0].legs[0].distance.text);
-                  //gmapContainer.distance = response.routes[0].legs[0].distance.text;
+                  var distance = response.routes[0].legs[0].distance.text;
+                  elem[0].lastElementChild.innerHTML = 'Distance from warehouse to destination point: ' + distance;
                 }
             });
           }

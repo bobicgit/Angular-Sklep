@@ -13,13 +13,9 @@ angular
 
         initialize();
 
-
-        function initialize () {
-            FirebaseAuthFactory.initialize();
+        function initialize() {
+            FirebaseAuthFactory.checkStatusOfLog();
         }
-
-
     }
-
 
 })();

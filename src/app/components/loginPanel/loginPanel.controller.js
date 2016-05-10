@@ -33,14 +33,12 @@ angular
         vm.addUser = addUser;
         vm.authUser = authUser;
         vm.toggleSignUp = toggleSignUp;
-        
 
         initialize();
 
         function initialize () {
-            FirebaseAuthFactory.initialize(); 
-        }   
-
+            FirebaseAuthFactory.checkStatusOfLog();
+        }
 
         function addUser(email, password){
             FirebaseAuthFactory.addUser(email, password)
@@ -84,7 +82,7 @@ angular
         function toggleSignUp () {
             vm.signUp = (!vm.signUp);
         }
-         
+
 
 
     }

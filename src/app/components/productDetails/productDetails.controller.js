@@ -5,7 +5,7 @@ angular
     .module('ng-shop')
     .controller('ProductDetailsController', ProductDetailsController);
 
-  
+
 
     ProductDetailsController.$inject = ['FirebaseFactory', '$window', '$location', '$timeout', 'FirebaseAuthFactory'];
 
@@ -19,29 +19,23 @@ angular
         vm.comments = [];
         vm.active = true;
         vm.inputActive = false;
-
         vm.add = add;
         vm.showCommentInput = showCommentInput;
         vm.sendComment = sendComment;
-       
 
         initialize();
 
-
-
         function initialize () {
-            FirebaseAuthFactory.initialize(); 
+            FirebaseAuthFactory.checkStatusOfLog();
             getProduct();
-        }       
-        
-
+        }
 
         // downloading data from database depending on hash location which conatains product's id
         // comments are put to other table for convenience
 
         function getProduct () {
 
-            vm.id = $window.location.hash; 
+            vm.id = $window.location.hash;
             vm.id = vm.id.split('/')[1];
 
             FirebaseFactory.getItem(vm.id)
@@ -78,7 +72,7 @@ angular
         }
 
 
-        // stores new comment and sends it to the database 
+        // stores new comment and sends it to the database
 
         function sendComment () {
 
@@ -86,7 +80,7 @@ angular
             var comment = vm.comment;
             var author = vm.commentAuthor;
             var newComment = {};
-            
+
             vm.comment = '';
             vm.commentAuthor = '';
 
@@ -98,7 +92,7 @@ angular
         }
 
 
-   
+
     }
 
 

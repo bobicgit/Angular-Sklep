@@ -26,19 +26,11 @@
       var vm = this;
 
       vm.apiReady = false;
-      // vm.distance;
 
       googleMapApiService.onReady()
         .then(function() {
             vm.apiReady = true;
       })
-
-      $scope.$on('distance', function () {
-        //console.log(arguments);
-        vm.distance = arguments[1];
-        console.log(vm.distance);
-      });
-
     }
   }
 })();

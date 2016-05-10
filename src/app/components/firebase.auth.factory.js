@@ -20,19 +20,20 @@
           initialize: initialize,
           checkStatus:checkStatus,
           logOut: logOut,
-          getAnonymousCartData: getAnonymousCartData
+          getAnonymousCartData: getAnonymousCartData,
+          checkStatusOfLog: checkStatusOfLog
         }
 
         return factory;
 
-        //initialize();
-
-        function initialize () {
+        function initialize() {
           var defer = $q.defer();
-
           defer.resolve(checkStatus);
-
           return defer.promise;
+        }
+
+        function checkStatusOfLog() {
+          ref.onAuth(checkStatus);
         }
 
         // gets info from Firebase if the user is logged or not

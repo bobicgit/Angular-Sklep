@@ -13,9 +13,7 @@ angular
       var vm = this,
           userId;
 
-
       vm.newAddress;
-
       vm.cartItems = [];
       vm.sum = 0;
       vm.userInfos = {};

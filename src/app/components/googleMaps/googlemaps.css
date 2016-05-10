@@ -3,3 +3,7 @@
   height: 390px;
   margin: 0 auto;
 }
+#distance {
+  font-size: 19px;
+  padding: 5px;
+}

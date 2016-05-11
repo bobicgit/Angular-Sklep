@@ -1,27 +1,40 @@
 <div class="container summaryPanel" ng-controller = "SummaryController as vm">
   <div class="row">
     <h3 id="infoForUser">There are your personal data and shipping address. If you want to change shipping address, click button below.</h3>
-      <div class="col-md-6">
-        <form  ng-submit = "vm.submitEditForm()">
-          <p ng-if="vm.showActualAddress">{{vm.userInfos.firstName}}</p>
-            <input ng-if="vm.showEditField" class="edit" ng-model="vm.userInfos.firstName" required></input>
-          <p ng-if="vm.showActualAddress">{{vm.userInfos.surname}}</p>
-            <input ng-if="vm.showEditField" class="edit" ng-model="vm.userInfos.surname" required></input>
-          <p ng-if="vm.showActualAddress">{{vm.userInfos.email}}</p>
-            <input ng-if="vm.showEditField" class="edit" ng-model="vm.userInfos.email" required></input>
-          <p ng-if="vm.showActualAddress">{{vm.userInfos.phoneNumber}}</p>
-            <input ng-if="vm.showEditField" class="edit" ng-model="vm.userInfos.phoneNumber" required></input>
-          <p ng-if="vm.showActualAddress">{{vm.userInfos.addressStreet}}</p>
-            <input ng-if="vm.showEditField" class="edit" ng-model="vm.userInfos.addressStreet" required></input>
-          <p ng-if="vm.showActualAddress">{{vm.userInfos.addressCity}}</p>
-            <input ng-if="vm.showEditField" class="edit" ng-model="vm.userInfos.addressCity" required></input>
-          <p ng-if="vm.showActualAddress">{{vm.userInfos.addressCountry}}</p>
-            <input ng-if="vm.showEditField" class="edit" ng-model="vm.userInfos.addressCountry" required></input>
-        </form>
-        <button class="btn btn-success btn-lg changeAddress" ng-click="vm.editFields()" ng-if="vm.showActualAddress"> Change shipping address and personal info</button>
-        <button class="btn btn-danger btn-lg changeAddress" ng-click="vm.submitEditForm()" ng-if="vm.showEditField"> Accept changes</button>
+      <div class="col-md-12 personalInfoForm">
+        <div class="col-md-6 personalLabel" >
+        <p><label >First Name:</label></p>
+        <p><label >Last Name:</label></p>
+        <p><label >Email:</label></p>
+        <p><label >Phone Number:</label></p>
+        <p><label >Street:</label></p>
+        <p><label >City:</label></p>
+        <p><label >Country:</label></p>
+        </div>
+        <div class="col-md-6">
+          <form  ng-submit = "vm.submitEditForm()">
+            <p ng-if="vm.showActualAddress"> {{vm.userInfos.firstName}}</p>
+              <input ng-if="vm.showEditField" class="edit" ng-model="vm.userInfos.firstName" required></input>
+            <p ng-if="vm.showActualAddress"> {{vm.userInfos.surname}}</p>
+              <input ng-if="vm.showEditField" class="edit" ng-model="vm.userInfos.surname" required></input>
+            <p ng-if="vm.showActualAddress">  {{vm.userInfos.email}}</p>
+              <input ng-if="vm.showEditField" class="edit" ng-model="vm.userInfos.email" required></input>
+            <p ng-if="vm.showActualAddress"> {{vm.userInfos.phoneNumber}}</p>
+              <input ng-if="vm.showEditField" class="edit" ng-model="vm.userInfos.phoneNumber" required></input>
+            <p ng-if="vm.showActualAddress"> {{vm.userInfos.addressStreet}}</p>
+              <input ng-if="vm.showEditField" class="edit" ng-model="vm.userInfos.addressStreet" required></input>
+            <p ng-if="vm.showActualAddress"> {{vm.userInfos.addressCity}}</p>
+              <input ng-if="vm.showEditField" class="edit" ng-model="vm.userInfos.addressCity" required></input>
+            <p ng-if="vm.showActualAddress">  {{vm.userInfos.addressCountry}}</p>
+              <input ng-if="vm.showEditField" class="edit" ng-model="vm.userInfos.addressCountry" required></input>
+            <input type="submit"/>
+<!--             <button type="submit" class="btn btn-danger btn-lg changeAddress" ng-click="vm.submitEditForm()" ng-if="vm.showEditField">Accept changes</button> -->
+          </form>
+
+        </div>
+          <button class="btn btn-success btn-lg changeAddress" ng-click="vm.editFields()" ng-if="vm.showActualAddress"> Change shipping address and personal info</button>
       </div>
-      <div class="col-md-6">
+      <div class="col-md-12">
          <google-maps-container address="{{vm.newAddress}}"></google-maps-container>
       </div>
   </div>

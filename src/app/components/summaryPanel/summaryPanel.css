@@ -11,22 +11,47 @@
 }
 
 .changeAddress {
-  margin-top:20px;
+  margin-top:-5px;
   margin-bottom: 30px;
 }
 
 .edit {
-  font-size: 22px;
+  font-size: 20px;
   margin: 5px 0;
-  text-align: center;
+  text-align: left;
   border-radius: 5px;
 }
 
 #infoForUser {
-  margin-bottom: 40px;
+  margin-bottom: 10px;
   padding:20px;
 }
 
 .summaryPanel {
   margin-bottom: 90px;
 }
+.personalLabel p {
+  margin-bottom: 0px;
+  margin-top:9px;
+  text-align: right
+}
+
+.summaryPanel form p{
+    margin-top:7px;
+    text-align: left;
+}
+
+.summaryPanel form input{
+    text-align: left;
+    float: left;
+}
+.summaryPanel form button{
+  position: relative;
+}
+.summaryPanel input[type="submit"] {
+  visibility: hidden;
+}
+.personalInfoForm{
+  margin-bottom: 30px;
+}
+
